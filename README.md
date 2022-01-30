@@ -1,6 +1,6 @@
 # Software Design
 
-![alt text](https://github.com/eshelukhina/HSE2022-SD/blob/task1/cliArch.png?raw=true)
+![alt text](https://github.com/eshelukhina/HSE2022-SD/blob/task1/cliArch.png)
 
 * **App** – Точка входа в приложение. Использует другие модули для обработки запросов.
 
