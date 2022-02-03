@@ -6,7 +6,7 @@ class Echo:
         print(" ".join(self.args))
 
     def __str__(self):
-        f'ECHO {self.args}'
+        return f'ECHO {self.args}'
 
     def __eq__(self, other):
         if isinstance(other, Echo):

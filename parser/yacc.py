@@ -56,6 +56,13 @@ def p_expr_eq_quotes(p):
     p[0] = Node(node_type=Node.NodeType.command, value=p[2], children=[p[1], p[3][1:-1]])
 
 
+def p_expr_process(p):
+    '''expr : SYMBOLS
+            | SYMBOLS args'''
+    args = [] if len(p) == 2 else p[2]
+    p[0] = Node(node_type=Node.NodeType.command, value=p[1], children=args)
+
+
 def p_args(p):
     ''' args : arg
              | args arg'''
@@ -79,7 +86,7 @@ def p_arg_quotes(p):
 
 
 def p_error(p):
-    print("Syntax error in input!")
+    raise RuntimeError(f'Could not parse input')
 
 
 precedence = (
@@ -88,13 +95,3 @@ precedence = (
 
 
 yacc_parser = yacc.yacc()
-
-if __name__ == '__main__':
-    while True:
-        try:
-            s = input('calc > ')
-        except EOFError:
-            break
-        if not s: continue
-        result = yacc_parser.parse(s)
-        print(result)

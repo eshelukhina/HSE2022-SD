@@ -6,7 +6,7 @@ class Wc:
         pass
 
     def __str__(self):
-        f'WC {self.args}'
+        return f'WC {self.args}'
 
     def __eq__(self, other):
         if isinstance(other, Wc):
