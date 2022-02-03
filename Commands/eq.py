@@ -7,7 +7,7 @@ class Eq:
         pass
 
     def __str__(self):
-        f'{self.dest} EQ {self.src}'
+        return f'{self.dest} EQ {self.src}'
 
     def __eq__(self, other):
         if isinstance(other, Eq):

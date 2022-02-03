@@ -6,7 +6,7 @@ class Exit:
         pass
 
     def __str__(self):
-        f'EXIT {self.args}'
+        return f'EXIT {self.args}'
 
     def __eq__(self, other):
         if isinstance(other, Exit):
