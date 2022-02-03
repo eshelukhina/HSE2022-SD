@@ -1,0 +1,117 @@
+from typing import List, Tuple, NoReturn
+
+from ply.lex import LexToken
+from parser.lex import lexer
+
+
+def tokenize(*, line: str) -> List[LexToken]:
+    lexer.input(line)
+    return [tok for tok in lexer]
+
+
+def compare_tokens(*, tokens: List[LexToken], correct_tokens: List[Tuple[str, str]]) -> NoReturn:
+    assert len(tokens) == len(correct_tokens)
+    for i in range(len(tokens)):
+        correct_type, correct_value = correct_tokens[i]
+        assert tokens[i].type == correct_type
+        assert tokens[i].value == correct_value
+
+
+def test_command():
+    tokens = tokenize(line='wc cat echo pwd exit')
+    correct_tokens = [
+        ('WC', 'wc'),
+        ('CAT', 'cat'),
+        ('ECHO', 'echo'),
+        ('PWD', 'pwd'),
+        ('EXIT', 'exit'),
+    ]
+    compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
+
+
+def test_symbols():
+    tokens = tokenize(line='cat arg1 $varName10 arg3')
+    correct_tokens = [
+        ('CAT', 'cat'),
+        ('SYMBOLS', 'arg1'),
+        ('SYMBOLS', '$varName10'),
+        ('SYMBOLS', 'arg3'),
+    ]
+    compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
+
+
+def test_double_quotes():
+    tokens = tokenize(line='echo "$varName" "arg2""arg3" "the cat says \'$x\'" just_symbols')
+    correct_tokens = [
+        ('ECHO', 'echo'),
+        ('DOUBLE_QUOTES', '"$varName"'),
+        ('DOUBLE_QUOTES', '"arg2"'),
+        ('DOUBLE_QUOTES', '"arg3"'),
+        ('DOUBLE_QUOTES', '"the cat says \'$x\'"'),
+        ('SYMBOLS', 'just_symbols')
+    ]
+    compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
+
+
+def test_single_quotes():
+    tokens = tokenize(line="echo '$varName' 'arg1''arg3' just_symbols")
+    correct_tokens = [
+        ('ECHO', 'echo'),
+        ('SINGLE_QUOTES', "'$varName'"),
+        ('SINGLE_QUOTES', "'arg1'"),
+        ('SINGLE_QUOTES', "'arg3'"),
+        ('SYMBOLS', 'just_symbols')
+    ]
+    compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
+
+
+def test_pipe():
+    tokens = tokenize(line='echo file_name.txt | cat | exit')
+    correct_tokens = [
+        ('ECHO', 'echo'),
+        ('SYMBOLS', 'file_name.txt'),
+        ('PIPE', '|'),
+        ('CAT', 'cat'),
+        ('PIPE', '|'),
+        ('EXIT', 'exit')
+    ]
+    compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
+
+
+def test_eq():
+    tokens = tokenize(line='x=file_name.txt')
+    correct_tokens = [
+        ('SYMBOLS', 'x'),
+        ('EQ', '='),
+        ('SYMBOLS', 'file_name.txt'),
+    ]
+    compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
+
+    tokens = tokenize(line='x = file_name.txt')
+    correct_tokens = [
+        ('SYMBOLS', 'x'),
+        ('EQ', '='),
+        ('SYMBOLS', 'file_name.txt'),
+    ]
+    compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
+
+
+def test_eq_quotes():
+    tokens = tokenize(line="x=\"file_name.txt\"")
+    correct_tokens = [
+        ('SYMBOLS', 'x'),
+        ('EQ', '='),
+        ('DOUBLE_QUOTES', "\"file_name.txt\""),
+    ]
+    compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
+
+    tokens = tokenize(line="x='file_name.txt'")
+    correct_tokens = [
+        ('SYMBOLS', 'x'),
+        ('EQ', '='),
+        ('SINGLE_QUOTES', "'file_name.txt'"),
+    ]
+    compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
+
+
+
