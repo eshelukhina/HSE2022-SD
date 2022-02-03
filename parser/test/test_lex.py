@@ -1,5 +1,6 @@
 from typing import List, Tuple, NoReturn
 
+import pytest
 from ply.lex import LexToken
 from parser.lex import lexer
 
@@ -40,6 +41,11 @@ def test_symbols():
     compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
 
 
+def test_fail():
+    with pytest.raises(RuntimeError) as error:
+        tokenize(line='cat ?????')
+
+
 def test_double_quotes():
     tokens = tokenize(line='echo "$varName" "arg2""arg3" "the cat says \'$x\'" just_symbols')
     correct_tokens = [
@@ -78,6 +84,16 @@ def test_pipe():
     compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
 
 
+def test_process():
+    tokens = tokenize(line='git checkout -b')
+    correct_tokens = [
+        ('SYMBOLS', 'git'),
+        ('SYMBOLS', 'checkout'),
+        ('SYMBOLS', '-b'),
+    ]
+    compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
+
+
 def test_eq():
     tokens = tokenize(line='x=file_name.txt')
     correct_tokens = [
@@ -112,6 +128,3 @@ def test_eq_quotes():
         ('SINGLE_QUOTES', "'file_name.txt'"),
     ]
     compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
-
-
-

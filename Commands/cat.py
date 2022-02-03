@@ -19,6 +19,9 @@ class Cat:
             else:
                 print('cat: No such file or directory')
 
+    def __str__(self):
+        return f'CAT {self.args}'
+
     def __eq__(self, other):
         if isinstance(other, Cat):
             return self.args == other.args

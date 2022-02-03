@@ -42,7 +42,7 @@ def t_DOUBLE_QUOTES(t):
 
 
 def t_SYMBOLS(t):
-    r'[a-zA-Z0-9_$.]+'
+    r'[a-zA-Z0-9_$.-]+'
     t.type = reserved.get(t.value, 'SYMBOLS')
     return t
 
@@ -50,10 +50,8 @@ def t_SYMBOLS(t):
 t_ignore = ' \t'
 
 
-# todo error handling
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
-    t.lexer.skip(1)
+    raise RuntimeError(f'Could not tokenize input: {t.value}')
 
 
 lexer = lex.lex()

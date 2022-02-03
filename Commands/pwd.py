@@ -6,7 +6,7 @@ class Pwd:
         pass
 
     def __str__(self):
-        f'PWD {self.args}'
+        return f'PWD {self.args}'
 
     def __eq__(self, other):
         if isinstance(other, Pwd):
