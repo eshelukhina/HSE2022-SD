@@ -1,0 +1,393 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> expr
+Rule 1     expr -> CAT
+Rule 2     expr -> ECHO
+Rule 3     expr -> WC
+Rule 4     expr -> PWD
+Rule 5     expr -> EXIT
+Rule 6     expr -> CAT args
+Rule 7     expr -> ECHO args
+Rule 8     expr -> WC args
+Rule 9     expr -> PWD args
+Rule 10    expr -> EXIT args
+Rule 11    expr -> SYMBOLS EQ SYMBOLS
+Rule 12    expr -> expr PIPE expr
+Rule 13    expr -> SYMBOLS EQ SINGLE_QUOTES
+Rule 14    expr -> SYMBOLS EQ DOUBLE_QUOTES
+Rule 15    args -> arg
+Rule 16    args -> args arg
+Rule 17    arg -> SYMBOLS
+Rule 18    arg -> SINGLE_QUOTES
+Rule 19    arg -> DOUBLE_QUOTES
+
+Terminals, with rules where they appear
+
+CAT                  : 1 6
+DOUBLE_QUOTES        : 14 19
+ECHO                 : 2 7
+EQ                   : 11 13 14
+EXIT                 : 5 10
+PIPE                 : 12
+PWD                  : 4 9
+SINGLE_QUOTES        : 13 18
+SYMBOLS              : 11 11 13 14 17
+WC                   : 3 8
+error                : 
+
+Nonterminals, with rules where they appear
+
+arg                  : 15 16
+args                 : 6 7 8 9 10 16
+expr                 : 12 12 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expr
+    (1) expr -> . CAT
+    (2) expr -> . ECHO
+    (3) expr -> . WC
+    (4) expr -> . PWD
+    (5) expr -> . EXIT
+    (6) expr -> . CAT args
+    (7) expr -> . ECHO args
+    (8) expr -> . WC args
+    (9) expr -> . PWD args
+    (10) expr -> . EXIT args
+    (11) expr -> . SYMBOLS EQ SYMBOLS
+    (12) expr -> . expr PIPE expr
+    (13) expr -> . SYMBOLS EQ SINGLE_QUOTES
+    (14) expr -> . SYMBOLS EQ DOUBLE_QUOTES
+
+    CAT             shift and go to state 2
+    ECHO            shift and go to state 3
+    WC              shift and go to state 4
+    PWD             shift and go to state 5
+    EXIT            shift and go to state 6
+    SYMBOLS         shift and go to state 7
+
+    expr                           shift and go to state 1
+
+state 1
+
+    (0) S' -> expr .
+    (12) expr -> expr . PIPE expr
+
+    PIPE            shift and go to state 8
+
+
+state 2
+
+    (1) expr -> CAT .
+    (6) expr -> CAT . args
+    (15) args -> . arg
+    (16) args -> . args arg
+    (17) arg -> . SYMBOLS
+    (18) arg -> . SINGLE_QUOTES
+    (19) arg -> . DOUBLE_QUOTES
+
+    PIPE            reduce using rule 1 (expr -> CAT .)
+    $end            reduce using rule 1 (expr -> CAT .)
+    SYMBOLS         shift and go to state 11
+    SINGLE_QUOTES   shift and go to state 12
+    DOUBLE_QUOTES   shift and go to state 13
+
+    args                           shift and go to state 9
+    arg                            shift and go to state 10
+
+state 3
+
+    (2) expr -> ECHO .
+    (7) expr -> ECHO . args
+    (15) args -> . arg
+    (16) args -> . args arg
+    (17) arg -> . SYMBOLS
+    (18) arg -> . SINGLE_QUOTES
+    (19) arg -> . DOUBLE_QUOTES
+
+    PIPE            reduce using rule 2 (expr -> ECHO .)
+    $end            reduce using rule 2 (expr -> ECHO .)
+    SYMBOLS         shift and go to state 11
+    SINGLE_QUOTES   shift and go to state 12
+    DOUBLE_QUOTES   shift and go to state 13
+
+    args                           shift and go to state 14
+    arg                            shift and go to state 10
+
+state 4
+
+    (3) expr -> WC .
+    (8) expr -> WC . args
+    (15) args -> . arg
+    (16) args -> . args arg
+    (17) arg -> . SYMBOLS
+    (18) arg -> . SINGLE_QUOTES
+    (19) arg -> . DOUBLE_QUOTES
+
+    PIPE            reduce using rule 3 (expr -> WC .)
+    $end            reduce using rule 3 (expr -> WC .)
+    SYMBOLS         shift and go to state 11
+    SINGLE_QUOTES   shift and go to state 12
+    DOUBLE_QUOTES   shift and go to state 13
+
+    args                           shift and go to state 15
+    arg                            shift and go to state 10
+
+state 5
+
+    (4) expr -> PWD .
+    (9) expr -> PWD . args
+    (15) args -> . arg
+    (16) args -> . args arg
+    (17) arg -> . SYMBOLS
+    (18) arg -> . SINGLE_QUOTES
+    (19) arg -> . DOUBLE_QUOTES
+
+    PIPE            reduce using rule 4 (expr -> PWD .)
+    $end            reduce using rule 4 (expr -> PWD .)
+    SYMBOLS         shift and go to state 11
+    SINGLE_QUOTES   shift and go to state 12
+    DOUBLE_QUOTES   shift and go to state 13
+
+    args                           shift and go to state 16
+    arg                            shift and go to state 10
+
+state 6
+
+    (5) expr -> EXIT .
+    (10) expr -> EXIT . args
+    (15) args -> . arg
+    (16) args -> . args arg
+    (17) arg -> . SYMBOLS
+    (18) arg -> . SINGLE_QUOTES
+    (19) arg -> . DOUBLE_QUOTES
+
+    PIPE            reduce using rule 5 (expr -> EXIT .)
+    $end            reduce using rule 5 (expr -> EXIT .)
+    SYMBOLS         shift and go to state 11
+    SINGLE_QUOTES   shift and go to state 12
+    DOUBLE_QUOTES   shift and go to state 13
+
+    args                           shift and go to state 17
+    arg                            shift and go to state 10
+
+state 7
+
+    (11) expr -> SYMBOLS . EQ SYMBOLS
+    (13) expr -> SYMBOLS . EQ SINGLE_QUOTES
+    (14) expr -> SYMBOLS . EQ DOUBLE_QUOTES
+
+    EQ              shift and go to state 18
+
+
+state 8
+
+    (12) expr -> expr PIPE . expr
+    (1) expr -> . CAT
+    (2) expr -> . ECHO
+    (3) expr -> . WC
+    (4) expr -> . PWD
+    (5) expr -> . EXIT
+    (6) expr -> . CAT args
+    (7) expr -> . ECHO args
+    (8) expr -> . WC args
+    (9) expr -> . PWD args
+    (10) expr -> . EXIT args
+    (11) expr -> . SYMBOLS EQ SYMBOLS
+    (12) expr -> . expr PIPE expr
+    (13) expr -> . SYMBOLS EQ SINGLE_QUOTES
+    (14) expr -> . SYMBOLS EQ DOUBLE_QUOTES
+
+    CAT             shift and go to state 2
+    ECHO            shift and go to state 3
+    WC              shift and go to state 4
+    PWD             shift and go to state 5
+    EXIT            shift and go to state 6
+    SYMBOLS         shift and go to state 7
+
+    expr                           shift and go to state 19
+
+state 9
+
+    (6) expr -> CAT args .
+    (16) args -> args . arg
+    (17) arg -> . SYMBOLS
+    (18) arg -> . SINGLE_QUOTES
+    (19) arg -> . DOUBLE_QUOTES
+
+    PIPE            reduce using rule 6 (expr -> CAT args .)
+    $end            reduce using rule 6 (expr -> CAT args .)
+    SYMBOLS         shift and go to state 11
+    SINGLE_QUOTES   shift and go to state 12
+    DOUBLE_QUOTES   shift and go to state 13
+
+    arg                            shift and go to state 20
+
+state 10
+
+    (15) args -> arg .
+
+    SYMBOLS         reduce using rule 15 (args -> arg .)
+    SINGLE_QUOTES   reduce using rule 15 (args -> arg .)
+    DOUBLE_QUOTES   reduce using rule 15 (args -> arg .)
+    PIPE            reduce using rule 15 (args -> arg .)
+    $end            reduce using rule 15 (args -> arg .)
+
+
+state 11
+
+    (17) arg -> SYMBOLS .
+
+    SYMBOLS         reduce using rule 17 (arg -> SYMBOLS .)
+    SINGLE_QUOTES   reduce using rule 17 (arg -> SYMBOLS .)
+    DOUBLE_QUOTES   reduce using rule 17 (arg -> SYMBOLS .)
+    PIPE            reduce using rule 17 (arg -> SYMBOLS .)
+    $end            reduce using rule 17 (arg -> SYMBOLS .)
+
+
+state 12
+
+    (18) arg -> SINGLE_QUOTES .
+
+    SYMBOLS         reduce using rule 18 (arg -> SINGLE_QUOTES .)
+    SINGLE_QUOTES   reduce using rule 18 (arg -> SINGLE_QUOTES .)
+    DOUBLE_QUOTES   reduce using rule 18 (arg -> SINGLE_QUOTES .)
+    PIPE            reduce using rule 18 (arg -> SINGLE_QUOTES .)
+    $end            reduce using rule 18 (arg -> SINGLE_QUOTES .)
+
+
+state 13
+
+    (19) arg -> DOUBLE_QUOTES .
+
+    SYMBOLS         reduce using rule 19 (arg -> DOUBLE_QUOTES .)
+    SINGLE_QUOTES   reduce using rule 19 (arg -> DOUBLE_QUOTES .)
+    DOUBLE_QUOTES   reduce using rule 19 (arg -> DOUBLE_QUOTES .)
+    PIPE            reduce using rule 19 (arg -> DOUBLE_QUOTES .)
+    $end            reduce using rule 19 (arg -> DOUBLE_QUOTES .)
+
+
+state 14
+
+    (7) expr -> ECHO args .
+    (16) args -> args . arg
+    (17) arg -> . SYMBOLS
+    (18) arg -> . SINGLE_QUOTES
+    (19) arg -> . DOUBLE_QUOTES
+
+    PIPE            reduce using rule 7 (expr -> ECHO args .)
+    $end            reduce using rule 7 (expr -> ECHO args .)
+    SYMBOLS         shift and go to state 11
+    SINGLE_QUOTES   shift and go to state 12
+    DOUBLE_QUOTES   shift and go to state 13
+
+    arg                            shift and go to state 20
+
+state 15
+
+    (8) expr -> WC args .
+    (16) args -> args . arg
+    (17) arg -> . SYMBOLS
+    (18) arg -> . SINGLE_QUOTES
+    (19) arg -> . DOUBLE_QUOTES
+
+    PIPE            reduce using rule 8 (expr -> WC args .)
+    $end            reduce using rule 8 (expr -> WC args .)
+    SYMBOLS         shift and go to state 11
+    SINGLE_QUOTES   shift and go to state 12
+    DOUBLE_QUOTES   shift and go to state 13
+
+    arg                            shift and go to state 20
+
+state 16
+
+    (9) expr -> PWD args .
+    (16) args -> args . arg
+    (17) arg -> . SYMBOLS
+    (18) arg -> . SINGLE_QUOTES
+    (19) arg -> . DOUBLE_QUOTES
+
+    PIPE            reduce using rule 9 (expr -> PWD args .)
+    $end            reduce using rule 9 (expr -> PWD args .)
+    SYMBOLS         shift and go to state 11
+    SINGLE_QUOTES   shift and go to state 12
+    DOUBLE_QUOTES   shift and go to state 13
+
+    arg                            shift and go to state 20
+
+state 17
+
+    (10) expr -> EXIT args .
+    (16) args -> args . arg
+    (17) arg -> . SYMBOLS
+    (18) arg -> . SINGLE_QUOTES
+    (19) arg -> . DOUBLE_QUOTES
+
+    PIPE            reduce using rule 10 (expr -> EXIT args .)
+    $end            reduce using rule 10 (expr -> EXIT args .)
+    SYMBOLS         shift and go to state 11
+    SINGLE_QUOTES   shift and go to state 12
+    DOUBLE_QUOTES   shift and go to state 13
+
+    arg                            shift and go to state 20
+
+state 18
+
+    (11) expr -> SYMBOLS EQ . SYMBOLS
+    (13) expr -> SYMBOLS EQ . SINGLE_QUOTES
+    (14) expr -> SYMBOLS EQ . DOUBLE_QUOTES
+
+    SYMBOLS         shift and go to state 21
+    SINGLE_QUOTES   shift and go to state 22
+    DOUBLE_QUOTES   shift and go to state 23
+
+
+state 19
+
+    (12) expr -> expr PIPE expr .
+    (12) expr -> expr . PIPE expr
+
+    PIPE            reduce using rule 12 (expr -> expr PIPE expr .)
+    $end            reduce using rule 12 (expr -> expr PIPE expr .)
+
+  ! PIPE            [ shift and go to state 8 ]
+
+
+state 20
+
+    (16) args -> args arg .
+
+    SYMBOLS         reduce using rule 16 (args -> args arg .)
+    SINGLE_QUOTES   reduce using rule 16 (args -> args arg .)
+    DOUBLE_QUOTES   reduce using rule 16 (args -> args arg .)
+    PIPE            reduce using rule 16 (args -> args arg .)
+    $end            reduce using rule 16 (args -> args arg .)
+
+
+state 21
+
+    (11) expr -> SYMBOLS EQ SYMBOLS .
+
+    PIPE            reduce using rule 11 (expr -> SYMBOLS EQ SYMBOLS .)
+    $end            reduce using rule 11 (expr -> SYMBOLS EQ SYMBOLS .)
+
+
+state 22
+
+    (13) expr -> SYMBOLS EQ SINGLE_QUOTES .
+
+    PIPE            reduce using rule 13 (expr -> SYMBOLS EQ SINGLE_QUOTES .)
+    $end            reduce using rule 13 (expr -> SYMBOLS EQ SINGLE_QUOTES .)
+
+
+state 23
+
+    (14) expr -> SYMBOLS EQ DOUBLE_QUOTES .
+
+    PIPE            reduce using rule 14 (expr -> SYMBOLS EQ DOUBLE_QUOTES .)
+    $end            reduce using rule 14 (expr -> SYMBOLS EQ DOUBLE_QUOTES .)
+
