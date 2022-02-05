@@ -13,11 +13,11 @@ class Cat:
             file_manager = FileManager(arg)
             file_manager.get_file_type()
             if file_manager.file_type == PathTypes.file:
-                print(file_manager.get_file_content())
+                return file_manager.get_file_content()
             elif file_manager.file_type == PathTypes.directory:
-                print('cat: Is a directory')
+                return 'cat: Is a directory'
             else:
-                print('cat: No such file or directory')
+                return 'cat: No such file or directory'
 
     def __str__(self):
         return f'CAT {self.args}'

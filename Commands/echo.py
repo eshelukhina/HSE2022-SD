@@ -3,7 +3,7 @@ class Echo:
         self.args = args
 
     def execute(self):
-        print(" ".join(self.args))
+        return " ".join(self.args)
 
     def __str__(self):
         return f'ECHO {self.args}'
