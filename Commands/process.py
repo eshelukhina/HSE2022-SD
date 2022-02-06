@@ -12,8 +12,8 @@ class Process:
 
     def execute(self, context: Context):
         """
-        Запускает внешнюю программу.
-        Результат ее выполнения записывает в Context
+        Execute external program.
+        Save result to the Context
         """
         result = subprocess.run([self.name] + self.args, capture_output=True, text=True)
         if result.returncode != 0:
