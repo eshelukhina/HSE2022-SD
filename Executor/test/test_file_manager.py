@@ -1,44 +1,43 @@
-# import os
-#
-# from Executor.file_manager import FileManager
-# from Executor.path_types import PathTypes
-#
-#
-# def test_get_file_type_file():
-#     file = "directory/test1.txt"
-#     file_manager = FileManager(file)
-#     assert file_manager.get_file_type() == PathTypes.file
-#
-#
-# def test_get_file_type_directory():
-#     file = "directory"
-#     file_manager = FileManager(file)
-#     assert file_manager.get_file_type() == PathTypes.directory
-#
-#
-# def test_get_file_content_file():
-#     file = "directory/test1.txt"
-#     content = "HelloWorld"
-#     file_manager = FileManager(file)
-#     file_manager.get_file_type()
-#     assert file_manager.get_file_content() == content
-#
-#
-# def test_get_file_content_directory():
-#     file = "directory"
-#     content = "test1.txt\ntest2.txt\n"
-#     file_manager = FileManager(file)
-#     file_manager.get_file_type()
-#     assert file_manager.get_file_content() == content
-#
-#
-# def test_get_current_directory():
-#     assert FileManager.get_current_directory() == os.getcwd()
-#
-#
-# if __name__ == '__main__':
-#     test_get_file_type_file()
-#     test_get_file_type_directory()
-#     test_get_file_content_file()
-#     test_get_file_content_directory()
-#     test_get_current_directory()
+import collections
+import os
+import tempfile
+
+from Executor.file_manager import FileManager
+
+
+def test_is_file():
+    file = tempfile.TemporaryFile()
+    assert FileManager.is_file(file.name) is True and os.path.exists(file.name) is True
+    file.close()
+    assert FileManager.is_file(file.name) is False and os.path.exists(file.name) is False
+
+
+def test_is_directory():
+    directory = tempfile.TemporaryDirectory()
+    assert FileManager.is_directory(directory.name) is True and os.path.exists(directory.name) is True
+    directory.cleanup()
+    assert FileManager.is_directory(directory.name) is False and os.path.exists(directory.name) is False
+
+
+def test_get_file_content():
+    content = "HelloWorld"
+    fd, path = tempfile.mkstemp()
+    try:
+        with os.fdopen(fd, 'w') as tmp:
+            tmp.write(content)
+        assert FileManager.get_file_content(path) == content
+    finally:
+        os.remove(path)
+
+
+def test_get_directory_content():
+    directory = tempfile.TemporaryDirectory()
+    file1 = tempfile.TemporaryFile(dir=directory.name)
+    file2 = tempfile.TemporaryFile(dir=directory.name)
+    result = FileManager.get_directory_content(directory.name)
+    assert collections.Counter(result) == collections.Counter([file1.name, file2.name])
+    directory.cleanup()
+
+
+def test_get_current_directory():
+    assert FileManager.get_current_directory() == os.getcwd()

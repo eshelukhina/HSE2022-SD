@@ -1,5 +1,7 @@
+from optional import Optional
+
+from Executor.context import Context
 from Executor.file_manager import FileManager
-from Executor.path_types import PathTypes
 
 
 class Cat:
@@ -9,20 +11,19 @@ class Cat:
         """
         self.args = args
 
-    def execute(self, context):
+    def execute(self, context: Context):
         """
-        Display contents of files
-        :param context:
+        Проверяет, что все аргументы это пути до существующих файлов.
+        Получает содержимое этих файлов и записывает его в Context
         """
         for arg in self.args:
-            file_manager = FileManager(arg)
-            file_manager.get_file_type()
-            if file_manager.file_type == PathTypes.file:
-                context.state = file_manager.get_file_content()
-            elif file_manager.file_type == PathTypes.directory:
-                context.error = 'cat: Is a directory'
-            else:
-                context.error = 'cat: No such file or directory'
+            if not FileManager.is_file(arg):
+                context.error = Optional.of(f'cat: {arg}: No such file')
+                return
+        result = ''
+        for arg in self.args:
+            result += FileManager.get_file_content(arg)
+        context.state = Optional.of(result)
 
     def __str__(self):
         return f'CAT {self.args}'
