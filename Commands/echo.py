@@ -1,16 +1,22 @@
+from typing import List
+
+from optional import Optional
+
+from Executor.context import Context
+
+
 class Echo:
-    def __init__(self, args):
+    def __init__(self, args: List[str]):
         """
         :param args:
         """
         self.args = args
 
-    def execute(self, context):
+    def execute(self, context: Context):
         """
         Output command arguments
-        :param context:
         """
-        context.state = " ".join(self.args)
+        context.state = Optional.of(" ".join(self.args))
 
     def __str__(self):
         return f'ECHO {self.args}'

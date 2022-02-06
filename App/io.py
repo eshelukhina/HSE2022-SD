@@ -16,7 +16,7 @@ class IO:
         :param user_output: successful command output
         :param err_output: failed command output
         """
-        if err_output is None:
-            print(user_output)
+        if err_output.is_present() is True:
+            print(user_output.get())
         else:
-            print(f"Error: {err_output}")
+            print(f"Error: {err_output.get()}")
