@@ -15,7 +15,8 @@ class App:
         Run shell emulator
         """
         while True:
-            # TODO : check terminate_shell signal
+            if self.executor.shell_terminated:
+                break
             user_input = self.io_handler.read()
             commands = self.parser.parse(input_data=user_input)
             self.executor.set_commands(commands)

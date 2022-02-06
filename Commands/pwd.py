@@ -1,9 +1,16 @@
+import os
+
+
 class Pwd:
     def __init__(self, args):
         self.args = args
 
-    def execute(self):
-        pass
+    def execute(self, context):
+        """
+        Get current working directory
+        :param context:
+        """
+        context.state = os.getcwd()
 
     def __str__(self):
         return f'PWD {self.args}'
