@@ -20,7 +20,7 @@ class Wc:
             if not FileManager.is_file(arg):
                 context.error = Optional.of(f'wc: {arg}: No such file')
                 return
-        final_result = ''
+        final_result = []
         for arg in self.args:
             result = []
             file_content = FileManager.get_file_content(arg)
@@ -38,8 +38,8 @@ class Wc:
             result.append(str(num_bytes))
 
             result.append(arg)
-            final_result += ' '.join(result) + '\n'
-        context.state = Optional.of(final_result[:-1])
+            final_result.append(' '.join(result))
+        context.state = Optional.of('\n'.join(final_result))
 
     def __str__(self):
         return f'WC {self.args}'
