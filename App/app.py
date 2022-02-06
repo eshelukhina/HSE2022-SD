@@ -4,7 +4,6 @@ from parser.impl import Parser
 
 
 class App:
-
     def __init__(self):
         self.io_handler = IO()
         self.parser = Parser()

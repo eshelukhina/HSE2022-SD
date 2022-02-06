@@ -7,6 +7,9 @@ from Executor.context import Context
 
 class Echo:
     def __init__(self, args: List[str]):
+        """
+        :param args: command arguments
+        """
         self.args = args
 
     def execute(self, context: Context):

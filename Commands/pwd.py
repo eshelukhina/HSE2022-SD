@@ -8,6 +8,9 @@ from Executor.file_manager import FileManager
 
 class Pwd:
     def __init__(self, args: List[str]):
+        """
+        :param args: command arguments
+        """
         self.args = args
 
     def execute(self, context: Context):

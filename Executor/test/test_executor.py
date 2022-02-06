@@ -18,6 +18,6 @@ def test_exit():
     executor = Executor()
     executor.set_commands([command])
     command_output, err_output = executor.run()
-    assert command_output.is_present() is True
+    assert command_output.get() is command.output
     assert err_output.is_present() is False
     assert executor.shell_terminated is True

@@ -6,6 +6,9 @@ from Executor.file_manager import FileManager
 
 class Cat:
     def __init__(self, args):
+        """
+        :param args: command arguments
+        """
         self.args = args
 
     def execute(self, context: Context):
