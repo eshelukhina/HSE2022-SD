@@ -1,3 +1,4 @@
+import collections
 import os
 import tempfile
 
@@ -34,9 +35,8 @@ def test_get_directory_content():
     file1 = tempfile.TemporaryFile(dir=directory.name)
     file2 = tempfile.TemporaryFile(dir=directory.name)
     result = FileManager.get_directory_content(directory.name)
-    assert result == file1.name + '\n' + file2.name or result == file2.name + '\n' + file1.name
+    assert collections.Counter(result) == collections.Counter([file1.name, file2.name])
     directory.cleanup()
-    assert FileManager
 
 
 def test_get_current_directory():

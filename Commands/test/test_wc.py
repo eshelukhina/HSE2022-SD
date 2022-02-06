@@ -19,7 +19,8 @@ def test_empty_file():
     try:
         wc = Wc([path])
         wc.execute(context)
-        assert context.state == '0 0 0\n'
+        assert context.state.is_present() is True
+        assert context.state.get() == '0 0 0 {}'.format(path)
     finally:
         os.remove(path)
 
@@ -31,9 +32,19 @@ def test_not_empty_file():
     try:
         wc = Wc([path])
         wc.execute(context)
-        assert context.state == '0 0 1\n'
+        assert context.state.is_present() is True
+        assert context.state.get() == '0 0 1 {}'.format(path)
     finally:
         os.remove(path)
+
+
+def test_with_error():
+    error = 'wc: f: No such file'
+    context = Context(1)
+    wc = Wc(['f'])
+    wc.execute(context)
+    assert context.error.is_present() is True
+    assert context.error.get() == error
 
 
 def test_empty_last_line():
@@ -43,7 +54,8 @@ def test_empty_last_line():
     try:
         wc = Wc([path])
         wc.execute(context)
-        assert context.state == '1 1 6\n'
+        assert context.state.is_present() is True
+        assert context.state.get() == '1 1 6 {}'.format(path)
     finally:
         os.remove(path)
 
@@ -55,7 +67,8 @@ def test_not_empty_last_line():
     try:
         wc = Wc([path])
         wc.execute(context)
-        assert context.state == '1 2 11\n'
+        assert context.state.is_present() is True
+        assert context.state.get() == '1 2 11 {}'.format(path)
     finally:
         os.remove(path)
 
@@ -68,7 +81,8 @@ def test_with_files():
     try:
         wc = Wc([path1, path2])
         wc.execute(context)
-        assert context.state == '1 2 11\n1 2 11\n'
+        assert context.state.is_present() is True
+        assert context.state.get() == '1 2 11 {0}\n1 2 11 {1}'.format(path1, path2)
     finally:
         os.remove(path1)
         os.remove(path2)

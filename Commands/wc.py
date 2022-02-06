@@ -1,5 +1,7 @@
 from typing import List
 
+from optional.optional import Optional
+
 from Executor.context import Context
 from Executor.file_manager import FileManager
 
@@ -16,14 +18,17 @@ class Wc:
         """
         for arg in self.args:
             if not FileManager.is_file(arg):
-                context.error = 'wc: No such file'
+                context.error = Optional.of('wc: {}: No such file'.format(arg))
                 return
+        result = ''
         for arg in self.args:
             file_content = FileManager.get_file_content(arg)
             lines = file_content.count('\n')
             words = len([y for x in file_content.split('\n') for y in x.split(' ') if y != ''])
             num_bytes = len(file_content.encode())
-            context.state += str(lines) + ' ' + str(words) + ' ' + str(num_bytes) + '\n'
+            result += str(lines) + ' ' + str(words) + ' ' + str(num_bytes) + ' ' + arg + '\n'
+        result = result[:-1]
+        context.state = Optional.of(result)
 
     def __str__(self):
         return f'WC {self.args}'

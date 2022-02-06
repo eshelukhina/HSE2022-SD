@@ -18,7 +18,7 @@ class FileManager:
 
     @staticmethod
     def get_directory_content(path_to_directory):
-        return '\n'.join([os.path.join(path_to_directory, x) for x in os.listdir(path_to_directory)])
+        return [os.path.join(path_to_directory, x) for x in os.listdir(path_to_directory)]
 
     @staticmethod
     def get_current_directory():

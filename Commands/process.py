@@ -1,5 +1,7 @@
 import subprocess
 
+from optional.optional import Optional
+
 from Executor.context import Context
 
 
@@ -15,9 +17,9 @@ class Process:
         """
         result = subprocess.run([self.name] + self.args, capture_output=True, text=True)
         if result.returncode != 0:
-            context.error = result.stderr
+            context.error = Optional.of(result.stderr)
         else:
-            context.state = result.stdout
+            context.state = Optional.of(result.stdout)
 
     def __str__(self):
         return f'Process name: {self.name}, args: {self.args}'
