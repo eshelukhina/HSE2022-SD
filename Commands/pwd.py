@@ -13,7 +13,6 @@ class Pwd:
     def execute(self, context: Context):
         """
         Get current working directory
-        :param context:
         """
         context.state = Optional.of(FileManager.get_current_directory())
 

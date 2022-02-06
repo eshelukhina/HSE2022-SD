@@ -9,6 +9,5 @@ def test_cur_dir():
     echo = Pwd(args=args)
     context = Context(1)
     echo.execute(context)
-    assert context.state.is_present() is True
     assert context.state.get() == result
     assert context.error.is_empty() is True

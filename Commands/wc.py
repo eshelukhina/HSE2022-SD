@@ -12,9 +12,9 @@ class Wc:
 
     def execute(self, context: Context):
         """
-        Checks that all arguments are paths to existing files.
-        Retrieves the contents of these files and counts the number of strings, words, and bytes for each.
-        Saves the result to the Context
+        Check that all arguments are paths to existing files.
+        Retrieves the contents of these files and count the number of strings, words, and bytes for each.
+        Save the result to the Context
         """
         for arg in self.args:
             if not FileManager.is_file(arg):
