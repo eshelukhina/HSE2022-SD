@@ -1,21 +1,28 @@
-import sys
-
 from Commands.process import Process
 from Executor.context import Context
 
 
 def test_print():
-    process = Process(name=sys.executable, args=["-c", "print('test')"])
-    context = Context(1)
+    process = Process(name='echo', args=["Hello World!"])
+    context = Context(env_vars={})
     process.execute(context)
-    assert context.state.is_present() is True
-    assert context.state.get() == "test\n"
-    assert context.error.is_empty() is True
+    assert context.state
+    assert context.state.get() == "Hello World!\n"
+    assert not context.error
 
 
-def test_proces_with_error():
-    process = Process(name=sys.executable, args=["-c", "prin('test')"])
-    context = Context(1)
+def test_env():
+    process = Process(name='echo', args=["$x"])
+    context = Context(env_vars={'x': 'Hello World!'})
     process.execute(context)
-    assert context.state.is_empty() is True
-    assert context.error.is_present() is True
+    assert context.state
+    assert context.state.get() == "Hello World!\n"
+    assert not context.error
+
+
+def test_process_with_error():
+    process = Process(name='ca', args=[])
+    context = Context(env_vars={})
+    process.execute(context)
+    assert not context.state
+    assert context.error

@@ -7,7 +7,7 @@ def test_cur_dir():
     args = ['']
     result = os.getcwd()
     pwd = Pwd(args=args)
-    context = Context(1)
+    context = Context(env_vars={})
     pwd.execute(context)
     assert context.state.get() == result
-    assert context.error.is_empty() is True
+    assert not context.error

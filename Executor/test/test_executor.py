@@ -3,6 +3,14 @@ from Commands.exit import Exit
 from Executor.executor import Executor
 
 
+def test_no_commands():
+    executor = Executor()
+    executor.set_commands([])
+    command_output, err_output = executor.run()
+    assert not command_output
+    assert not err_output
+
+
 def test_one_command():
     args = ['hello world!']
     command = Echo(args=args)
@@ -10,7 +18,7 @@ def test_one_command():
     executor.set_commands([command])
     command_output, err_output = executor.run()
     assert command_output.get() == args[0]
-    assert err_output.is_present() is False
+    assert not err_output
 
 
 def test_exit():
@@ -18,6 +26,6 @@ def test_exit():
     executor = Executor()
     executor.set_commands([command])
     command_output, err_output = executor.run()
-    assert command_output.get() is command.output
-    assert err_output.is_present() is False
-    assert executor.shell_terminated is True
+    assert command_output.get() == command.output
+    assert executor.shell_terminated
+    assert not err_output
