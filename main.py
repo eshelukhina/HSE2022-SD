@@ -1,2 +1,5 @@
+from App.app import App
+
 if __name__ == '__main__':
-    print("Am i Daniel Gabitov?")
+    app = App()
+    app.run()
