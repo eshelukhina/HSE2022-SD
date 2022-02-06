@@ -12,11 +12,14 @@ class Echo:
         """
         self.args = args
 
-    def execute(self, context: Context):
+    def execute(self, context: Context) -> int:
         """
-        Output command arguments
+        Writes command arguments in Context
+        Returns command status code
+        :returns int
         """
         context.state = Optional.of(" ".join(self.args))
+        return 0
 
     def __str__(self):
         return f'ECHO {self.args}'

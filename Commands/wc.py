@@ -13,16 +13,18 @@ class Wc:
         """
         self.args = args
 
-    def execute(self, context: Context):
+    def execute(self, context: Context) -> int:
         """
         Check that all arguments are paths to existing files.
         Retrieves the contents of these files and count the number of strings, words, and bytes for each.
         Save the result to the Context
+        Returns command status code
+        :returns int
         """
         for arg in self.args:
             if not FileManager.is_file(arg):
-                context.error = Optional.of(f'wc: {arg}: No such file')
-                return
+                context.error = Optional.of(f'wc: no such file {arg}')
+                return -1
         final_result = []
         for arg in self.args:
             result = []
@@ -43,6 +45,7 @@ class Wc:
             result.append(arg)
             final_result.append(' '.join(result))
         context.state = Optional.of('\n'.join(final_result))
+        return 0
 
     def __str__(self):
         return f'WC {self.args}'

@@ -7,7 +7,7 @@ class IO:
         Read user input
         :return: str
         """
-        user_input = input(">>>")
+        user_input = input(">>> ")
         return user_input
 
     def write(self, user_output, err_output):
@@ -16,7 +16,11 @@ class IO:
         :param user_output: successful command output
         :param err_output: failed command output
         """
-        if err_output.is_empty() is True:
-            print(user_output.get())
+        if err_output:
+            print(f"{err_output.get()}")
+            return
+        if user_output:
+            print(f"{user_output.get()}")
         else:
-            print(f"Error: {err_output.get()}")
+            print('', end='')
+

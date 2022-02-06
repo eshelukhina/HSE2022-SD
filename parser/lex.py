@@ -32,7 +32,7 @@ t_EQ = r'='
 
 
 def t_SINGLE_QUOTES(t):
-    r'\'[^\']+\''
+    r"\'[^']+\'"
     return t
 
 
@@ -42,7 +42,7 @@ def t_DOUBLE_QUOTES(t):
 
 
 def t_SYMBOLS(t):
-    r'[a-zA-Z0-9_$.-]+'
+    r'[^\s|=]+'
     t.type = reserved.get(t.value, 'SYMBOLS')
     return t
 

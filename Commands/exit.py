@@ -14,12 +14,15 @@ class Exit:
         self.args = args
         self.output = "Shell is terminated"
 
-    def execute(self, context: Context):
+    def execute(self, context: Context) -> int:
         """
         Terminate the current shell
+        Returns command status code
+        :returns int
         """
         Executor.shell_terminated = True
         context.state = Optional.of(self.output)
+        return 0
 
     def __str__(self):
         return f'EXIT {self.args}'

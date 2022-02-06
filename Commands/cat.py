@@ -11,19 +11,22 @@ class Cat:
         """
         self.args = args
 
-    def execute(self, context: Context):
+    def execute(self, context: Context) -> int:
         """
         Check that arguments are paths to existing files.
         Retrieve the contents of these files and write it to the Context
+        Return command status code
+        :returns int
         """
         for arg in self.args:
             if not FileManager.is_file(arg):
-                context.error = Optional.of(f'cat: {arg}: No such file')
-                return
+                context.error = Optional.of(f'cat: no such file {arg}')
+                return -1
         result = ''
         for arg in self.args:
             result += FileManager.get_file_content(arg)
         context.state = Optional.of(result)
+        return 0
 
     def __str__(self):
         return f'CAT {self.args}'

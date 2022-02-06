@@ -6,17 +6,17 @@ def test_one_arg():
     args = ["hello world !"]
     result = "hello world !"
     echo = Echo(args=args)
-    context = Context(1)
+    context = Context(env_vars={})
     echo.execute(context)
     assert context.state.get() == result
-    assert context.error.is_empty() is True
+    assert not context.error
 
 
 def test_several_args():
     args = ["hello", "world", "!"]
     result = "hello world !"
     echo = Echo(args=args)
-    context = Context(1)
+    context = Context(env_vars={})
     echo.execute(context)
     assert context.state.get() == result
-    assert context.error.is_empty() is True
+    assert not context.error

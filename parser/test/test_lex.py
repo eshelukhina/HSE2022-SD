@@ -41,11 +41,6 @@ def test_symbols():
     compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
 
 
-def test_fail():
-    with pytest.raises(RuntimeError) as error:
-        tokenize(line='cat ?????')
-
-
 def test_double_quotes():
     tokens = tokenize(line='echo "$varName" "arg2""arg3" "the cat says \'$x\'" just_symbols')
     correct_tokens = [
