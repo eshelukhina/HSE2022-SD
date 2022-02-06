@@ -1,6 +1,6 @@
 import subprocess
 
-from optional.optional import Optional
+from optional import Optional
 
 from Executor.context import Context
 
@@ -10,16 +10,22 @@ class Process:
         self.name = name
         self.args = args
 
-    def execute(self, context: Context):
+    def execute(self, context: Context) -> int:
         """
         Execute external program.
         Save result to the Context
+        :returns: command status code
+        :rtype: int
         """
-        result = subprocess.run([self.name] + self.args, capture_output=True, text=True)
+        command = ' '.join([self.name] + self.args)
+        result = subprocess.run(
+            command, shell=True, capture_output=True, text=True, env=context.env
+        )
         if result.returncode != 0:
             context.error = Optional.of(result.stderr)
         else:
             context.state = Optional.of(result.stdout)
+        return result.returncode
 
     def __str__(self):
         return f'Process name: {self.name}, args: {self.args}'

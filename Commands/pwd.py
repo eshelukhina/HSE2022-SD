@@ -13,11 +13,14 @@ class Pwd:
         """
         self.args = args
 
-    def execute(self, context: Context):
+    def execute(self, context: Context) -> int:
         """
-        Get current working directory
+        Writes current working directory in Context
+        :returns: command status code
+        :rtype: int
         """
         context.state = Optional.of(FileManager.get_current_directory())
+        return 0
 
     def __str__(self):
         return f'PWD {self.args}'
