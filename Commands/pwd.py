@@ -16,8 +16,8 @@ class Pwd:
     def execute(self, context: Context) -> int:
         """
         Writes current working directory in Context
-        Returns command status code
-        :returns int
+        :returns: command status code
+        :rtype: int
         """
         context.state = Optional.of(FileManager.get_current_directory())
         return 0

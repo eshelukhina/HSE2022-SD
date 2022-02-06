@@ -2,6 +2,7 @@ class IO:
     def __init__(self):
         pass
 
+    @staticmethod
     def read(self):
         """
         Read user input
@@ -10,6 +11,7 @@ class IO:
         user_input = input(">>> ")
         return user_input
 
+    @staticmethod
     def write(self, user_output, err_output):
         """
         Print command output
@@ -18,9 +20,7 @@ class IO:
         """
         if err_output:
             print(f"{err_output.get()}")
-            return
-        if user_output:
+        elif user_output:
             print(f"{user_output.get()}")
         else:
             print('', end='')
-

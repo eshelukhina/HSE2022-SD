@@ -1,14 +1,13 @@
 from typing import List
 
 from Executor.context import Context
-from Environment.impl import env
+from Environment.impl import Environment
 
 
 class Executor:
     def __init__(self):
         self.commands = []
-        self.env = env
-        pass
+        self.env = Environment()
 
     shell_terminated = False
 

@@ -17,8 +17,8 @@ class Exit:
     def execute(self, context: Context) -> int:
         """
         Terminate the current shell
-        Returns command status code
-        :returns int
+        :returns: command status code
+        :rtype: int
         """
         Executor.shell_terminated = True
         context.state = Optional.of(self.output)

@@ -13,8 +13,9 @@ class Process:
     def execute(self, context: Context) -> int:
         """
         Execute external program.
-        Save result to the Context, returns process status code
-        :returns int
+        Save result to the Context
+        :returns: command status code
+        :rtype: int
         """
         command = ' '.join([self.name] + self.args)
         result = subprocess.run(

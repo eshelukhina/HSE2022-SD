@@ -18,8 +18,8 @@ class Wc:
         Check that all arguments are paths to existing files.
         Retrieves the contents of these files and count the number of strings, words, and bytes for each.
         Save the result to the Context
-        Returns command status code
-        :returns int
+        :returns: command status code
+        :rtype: int
         """
         for arg in self.args:
             if not FileManager.is_file(arg):

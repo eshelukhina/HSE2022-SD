@@ -16,7 +16,8 @@ class Echo:
         """
         Writes command arguments in Context
         Returns command status code
-        :returns int
+        :returns: command status code
+        :rtype: int
         """
         context.state = Optional.of(" ".join(self.args))
         return 0

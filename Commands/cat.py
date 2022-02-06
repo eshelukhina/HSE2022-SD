@@ -15,8 +15,8 @@ class Cat:
         """
         Check that arguments are paths to existing files.
         Retrieve the contents of these files and write it to the Context
-        Return command status code
-        :returns int
+        :returns: command status code
+        :rtype: int
         """
         for arg in self.args:
             if not FileManager.is_file(arg):

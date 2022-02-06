@@ -11,11 +11,11 @@ class Eq:
     def execute(self, context: Context) -> int:
         """
         Updates value of environment variable
-        Returns command status code
-        :returns int
+        :returns: command status code
+        :rtype: int
         """
         context.env.add_var(name=self.dest, value=self.src)
-        context.set_state(Optional.empty())
+        context.state = Optional.empty()
         return 0
 
     def __str__(self):

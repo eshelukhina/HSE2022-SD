@@ -6,6 +6,3 @@ class Context:
         self.error = Optional.empty()
         self.state = Optional.empty()
         self.env = env_vars
-
-    def set_state(self, state):
-        self.state = state

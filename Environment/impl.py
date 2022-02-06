@@ -9,9 +9,9 @@ class Environment:
 
     def add_var(self, *, name, value) -> NoReturn:
         """
-        Add environment variable
-        :param name - имя переменной
-        :param value - значение переменной
+        Update environment variable
+        :param name - var name
+        :param value - new value
         """
         self.vars[name] = value
 
@@ -29,6 +29,3 @@ class Environment:
         :returns Dict[str, str]
         """
         return copy.deepcopy(self.vars)
-
-
-env = Environment()
