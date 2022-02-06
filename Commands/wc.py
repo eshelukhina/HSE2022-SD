@@ -18,17 +18,28 @@ class Wc:
         """
         for arg in self.args:
             if not FileManager.is_file(arg):
-                context.error = Optional.of('wc: {}: No such file'.format(arg))
+                context.error = Optional.of(f'wc: {arg}: No such file')
                 return
-        result = ''
+        final_result = ''
         for arg in self.args:
+            result = []
             file_content = FileManager.get_file_content(arg)
+
+            # Считаем количество строк, как количество знаков перевода строки
             lines = file_content.count('\n')
+            result.append(str(lines))
+
+            # Разбиваем содержимое файла на строки, потом разбиваем строки по пробелам и удаляем пустые строки
             words = len([y for x in file_content.split('\n') for y in x.split(' ') if y != ''])
+            result.append(str(words))
+
+            # Переводим содержимое файла в байты и считаем их количество
             num_bytes = len(file_content.encode())
-            result += str(lines) + ' ' + str(words) + ' ' + str(num_bytes) + ' ' + arg + '\n'
-        result = result[:-1]
-        context.state = Optional.of(result)
+            result.append(str(num_bytes))
+
+            result.append(arg)
+            final_result += ' '.join(result) + '\n'
+        context.state = Optional.of(final_result[:-1])
 
     def __str__(self):
         return f'WC {self.args}'

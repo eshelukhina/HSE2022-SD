@@ -17,7 +17,7 @@ class Cat:
         """
         for arg in self.args:
             if not FileManager.is_file(arg):
-                context.error = Optional.of('cat: {}: No such file'.format(arg))
+                context.error = Optional.of(f'cat: {arg}: No such file')
                 return
         result = ''
         for arg in self.args:

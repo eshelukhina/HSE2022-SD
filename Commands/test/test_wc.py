@@ -20,7 +20,7 @@ def test_empty_file():
         wc = Wc([path])
         wc.execute(context)
         assert context.state.is_present() is True
-        assert context.state.get() == '0 0 0 {}'.format(path)
+        assert context.state.get() == f'0 0 0 {path}'
     finally:
         os.remove(path)
 
@@ -33,7 +33,7 @@ def test_not_empty_file():
         wc = Wc([path])
         wc.execute(context)
         assert context.state.is_present() is True
-        assert context.state.get() == '0 0 1 {}'.format(path)
+        assert context.state.get() == f'0 0 1 {path}'
     finally:
         os.remove(path)
 
@@ -55,7 +55,7 @@ def test_empty_last_line():
         wc = Wc([path])
         wc.execute(context)
         assert context.state.is_present() is True
-        assert context.state.get() == '1 1 6 {}'.format(path)
+        assert context.state.get() == f'1 1 6 {path}'
     finally:
         os.remove(path)
 
@@ -68,7 +68,7 @@ def test_not_empty_last_line():
         wc = Wc([path])
         wc.execute(context)
         assert context.state.is_present() is True
-        assert context.state.get() == '1 2 11 {}'.format(path)
+        assert context.state.get() == f'1 2 11 {path}'
     finally:
         os.remove(path)
 
@@ -82,7 +82,7 @@ def test_with_files():
         wc = Wc([path1, path2])
         wc.execute(context)
         assert context.state.is_present() is True
-        assert context.state.get() == '1 2 11 {0}\n1 2 11 {1}'.format(path1, path2)
+        assert context.state.get() == f'1 2 11 {path1}\n1 2 11 {path2}'
     finally:
         os.remove(path1)
         os.remove(path2)
