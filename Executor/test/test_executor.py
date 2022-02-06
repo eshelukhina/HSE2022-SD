@@ -5,7 +5,7 @@ from Executor.executor import Executor
 
 def test_one_command():
     args = ['hello world!']
-    command = Echo(args=['hello world!'])
+    command = Echo(args=args)
     executor = Executor()
     executor.set_commands([command])
     command_output, err_output = executor.run()
