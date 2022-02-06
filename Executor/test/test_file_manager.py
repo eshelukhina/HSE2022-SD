@@ -31,12 +31,13 @@ def test_get_file_content():
 
 
 def test_get_directory_content():
-    directory = tempfile.TemporaryDirectory()
-    file1 = tempfile.TemporaryFile(dir=directory.name)
-    file2 = tempfile.TemporaryFile(dir=directory.name)
-    result = FileManager.get_directory_content(directory.name)
-    assert collections.Counter(result) == collections.Counter([file1.name, file2.name])
-    directory.cleanup()
+    with tempfile.TemporaryDirectory() as directory:
+        file1 = open(os.path.join(directory, "file1.txt"), "w+")
+        file1.close()
+        file2 = open(os.path.join(directory, "file2.xt"), "w+")
+        file2.close()
+        result = FileManager.get_directory_content(directory)
+        assert collections.Counter(result) == collections.Counter([file1.name, file2.name])
 
 
 def test_get_current_directory():
