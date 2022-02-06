@@ -6,7 +6,7 @@ class IO:
     def read(self):
         """
         Read user input
-        :return: str
+        :rtype str
         """
         user_input = input(">>> ")
         return user_input

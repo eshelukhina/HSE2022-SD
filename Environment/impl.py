@@ -2,7 +2,7 @@ import copy
 from typing import NoReturn
 
 
-# Класс, ответственный за поддержание переменных окружения
+# The class responsible for keeping environment variables
 class Environment:
     def __init__(self):
         self.vars = {}

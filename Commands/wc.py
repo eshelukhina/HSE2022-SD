@@ -24,7 +24,7 @@ class Wc:
         for arg in self.args:
             if not FileManager.is_file(arg):
                 context.error = Optional.of(f'wc: no such file {arg}')
-                return -1
+                return 2
         final_result = []
         for arg in self.args:
             result = []

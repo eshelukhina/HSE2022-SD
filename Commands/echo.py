@@ -15,7 +15,6 @@ class Echo:
     def execute(self, context: Context) -> int:
         """
         Writes command arguments in Context
-        Returns command status code
         :returns: command status code
         :rtype: int
         """
