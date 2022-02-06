@@ -14,12 +14,12 @@ def create_tmp_file(content):
 
 def test_empty_file():
     content = ''
-    context = Context(1)
+    context = Context(env_vars={})
     fd, path = create_tmp_file(content)
     try:
         wc = Wc([path])
         wc.execute(context)
-        assert context.state.is_present() is True
+        assert context.state
         assert context.state.get() == f'0 0 0 {path}'
     finally:
         os.remove(path)
@@ -27,34 +27,34 @@ def test_empty_file():
 
 def test_not_empty_file():
     content = ' '
-    context = Context(1)
+    context = Context(env_vars={})
     fd, path = create_tmp_file(content)
     try:
         wc = Wc([path])
         wc.execute(context)
-        assert context.state.is_present() is True
+        assert context.state
         assert context.state.get() == f'0 0 1 {path}'
     finally:
         os.remove(path)
 
 
 def test_with_error():
-    error = 'wc: f: No such file'
-    context = Context(1)
+    error = 'wc: no such file f'
+    context = Context(env_vars={})
     wc = Wc(['f'])
     wc.execute(context)
-    assert context.error.is_present() is True
+    assert context.error
     assert context.error.get() == error
 
 
 def test_empty_last_line():
     content = 'hello\n'
-    context = Context(1)
+    context = Context(env_vars={})
     fd, path = create_tmp_file(content)
     try:
         wc = Wc([path])
         wc.execute(context)
-        assert context.state.is_present() is True
+        assert context.state
         assert context.state.get() == f'1 1 6 {path}'
     finally:
         os.remove(path)
@@ -62,12 +62,12 @@ def test_empty_last_line():
 
 def test_not_empty_last_line():
     content = 'hello\nworld'
-    context = Context(1)
+    context = Context(env_vars={})
     fd, path = create_tmp_file(content)
     try:
         wc = Wc([path])
         wc.execute(context)
-        assert context.state.is_present() is True
+        assert context.state
         assert context.state.get() == f'1 2 11 {path}'
     finally:
         os.remove(path)
@@ -75,13 +75,13 @@ def test_not_empty_last_line():
 
 def test_with_files():
     content = 'hello\nworld'
-    context = Context(1)
+    context = Context(env_vars={})
     fd1, path1 = create_tmp_file(content)
     fd2, path2 = create_tmp_file(content)
     try:
         wc = Wc([path1, path2])
         wc.execute(context)
-        assert context.state.is_present() is True
+        assert context.state
         assert context.state.get() == f'1 2 11 {path1}\n1 2 11 {path2}'
     finally:
         os.remove(path1)

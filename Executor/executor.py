@@ -1,13 +1,13 @@
 from typing import List
 
-from optional.nothing import Nothing
-
 from Executor.context import Context
+from Environment.impl import Environment
 
 
 class Executor:
     def __init__(self):
-        pass
+        self.commands = []
+        self.env = Environment()
 
     shell_terminated = False
 
@@ -22,10 +22,9 @@ class Executor:
         """
         Executes the sequence of commands
         """
-        context = Context(len(self.commands))
+        context = Context(env_vars=self.env)
         for command in self.commands:
             command.execute(context)
-            if context.error.is_present() is True:
+            if context.error:
                 return context.state, context.error
-            context.current_command += 1
         return context.state, context.error
