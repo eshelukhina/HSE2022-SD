@@ -8,13 +8,16 @@ from Executor.file_manager import FileManager
 
 class Wc:
     def __init__(self, args: List[str]):
+        """
+        :param args: command arguments
+        """
         self.args = args
 
     def execute(self, context: Context):
         """
-        Проверяет, что все аргументы это пути до существующих файлов.
-        Получает содержимое этих файлов и считает для каждого кол-во строк, слов и байтов.
-        Записывает результат в Context
+        Check that all arguments are paths to existing files.
+        Retrieves the contents of these files and count the number of strings, words, and bytes for each.
+        Save the result to the Context
         """
         for arg in self.args:
             if not FileManager.is_file(arg):
@@ -25,15 +28,15 @@ class Wc:
             result = []
             file_content = FileManager.get_file_content(arg)
 
-            # Считаем количество строк, как количество знаков перевода строки
+            # Count the number of lines as the number of newline characters
             lines = file_content.count('\n')
             result.append(str(lines))
 
-            # Разбиваем содержимое файла на строки, потом разбиваем строки по пробелам и удаляем пустые строки
+            # Split the contents of the file into lines, then split the lines by spaces and delete the empty lines
             words = len([y for x in file_content.split('\n') for y in x.split(' ') if y != ''])
             result.append(str(words))
 
-            # Переводим содержимое файла в байты и считаем их количество
+            # Transform the contents of the file into bytes and count their number
             num_bytes = len(file_content.encode())
             result.append(str(num_bytes))
 

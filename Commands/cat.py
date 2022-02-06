@@ -1,19 +1,20 @@
-from typing import List
-
-from optional.optional import Optional
+from optional import Optional
 
 from Executor.context import Context
 from Executor.file_manager import FileManager
 
 
 class Cat:
-    def __init__(self, args: List[str]):
+    def __init__(self, args):
+        """
+        :param args: command arguments
+        """
         self.args = args
 
     def execute(self, context: Context):
         """
-        Проверяет, что все аргументы это пути до существующих файлов.
-        Получает содержимое этих файлов и записывает его в Context
+        Check that arguments are paths to existing files.
+        Retrieve the contents of these files and write it to the Context
         """
         for arg in self.args:
             if not FileManager.is_file(arg):

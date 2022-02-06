@@ -1,9 +1,25 @@
-class Exit:
-    def __init__(self, args):
-        self.args = args
+from typing import List
 
-    def execute(self):
-        pass
+from optional import Optional
+
+from Executor.context import Context
+from Executor.executor import Executor
+
+
+class Exit:
+    def __init__(self, args: List[str]):
+        """
+        :param args: command arguments
+        """
+        self.args = args
+        self.output = "Shell is terminated"
+
+    def execute(self, context: Context):
+        """
+        Terminate the current shell
+        """
+        Executor.shell_terminated = True
+        context.state = Optional.of(self.output)
 
     def __str__(self):
         return f'EXIT {self.args}'
