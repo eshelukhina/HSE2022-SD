@@ -3,7 +3,7 @@ class IO:
         pass
 
     @staticmethod
-    def read(self):
+    def read():
         """
         Read user input
         :rtype str
@@ -12,7 +12,7 @@ class IO:
         return user_input
 
     @staticmethod
-    def write(self, user_output, err_output):
+    def write(user_output, err_output):
         """
         Print command output
         :param user_output: successful command output
