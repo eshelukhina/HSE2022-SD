@@ -5,7 +5,6 @@ from parser.impl import Parser
 
 class App:
     def __init__(self):
-        self.io_handler = IO()
         self.parser = Parser()
         self.executor = Executor()
 
@@ -14,8 +13,8 @@ class App:
         Run shell emulator
         """
         while not self.executor.shell_terminated:
-            user_input = self.io_handler.read()
+            user_input = IO.read()
             commands = self.parser.parse(input_data=user_input)
             self.executor.set_commands(commands)
             command_output, err_output = self.executor.run()
-            self.io_handler.write(command_output, err_output)
+            IO.write(command_output, err_output)
