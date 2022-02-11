@@ -24,7 +24,7 @@ def t_DOUBLE_QUOTES(t):
 
 
 def t_SYMBOLS(t):
-    r'[^\s|=]+'
+    r'[^\s|=\'\"]+'
     return t
 
 
@@ -32,7 +32,9 @@ t_ignore = ' \t'
 
 
 def t_error(t):
-    raise ValueError(f'Could not tokenize input: {t.value}')
+    raise ValueError(
+        f'Could not tokenize input. Starting from line number: {t.lexer.lineno}'
+    )
 
 
 lexer = lex.lex()

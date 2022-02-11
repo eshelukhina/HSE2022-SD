@@ -66,3 +66,9 @@ def test_fail_eq():
     parser = Parser()
     with pytest.raises(ValueError):
         parser.parse(input_data="x=")
+
+
+def test_fail_single_quotes():
+    parser = Parser()
+    with pytest.raises(ValueError):
+        parser.parse(input_data="cat \"")
