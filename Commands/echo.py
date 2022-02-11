@@ -5,7 +5,7 @@ from Executor.context import Context
 
 class Echo:
     """
-    Return the given arguments in one line.
+    Return the given arguments.
     """
 
     def __init__(self, args: List[str]):
@@ -16,7 +16,7 @@ class Echo:
 
     def execute(self, context: Context) -> Tuple[str, int]:
         """
-        Return command arguments in one line
+        Return command arguments
         :returns: command status code
         :rtype: int
         """

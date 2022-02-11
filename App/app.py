@@ -1,3 +1,5 @@
+import sys
+
 from App.io import IO
 from Executor.executor import Executor
 from parser.impl import Parser
@@ -19,7 +21,13 @@ class App:
         while not self.executor.shell_terminated:
             user_input = None
             while user_input is None:
-                user_input = IO.read()
+                try:
+                    user_input = IO.read()
+                except KeyboardInterrupt:
+                    print('')
+                except EOFError:
+                    print('')
+                    sys.exit(0)
             try:
                 commands = self.parser.parse(input_data=user_input)
             except ValueError as v_err:

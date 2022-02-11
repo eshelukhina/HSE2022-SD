@@ -1,6 +1,3 @@
-import sys
-
-
 class IO:
     """
     Component responsible for communication with the outside world.
@@ -12,19 +9,10 @@ class IO:
     @staticmethod
     def read():
         """
-        Read user input and return him.
-        Print empty line and return None if a signal SIGINT was sent.
-        Print empty line and exit if an empty line was entered
+        Read user input
         :rtype str
         """
-        try:
-            return input(">>> ")
-        except KeyboardInterrupt:
-            print('')
-            return None
-        except EOFError:
-            print('')
-            sys.exit(0)
+        return input(">>> ")
 
     @staticmethod
     def write(output: str):
