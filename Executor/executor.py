@@ -5,6 +5,10 @@ from Environment.impl import Environment
 
 
 class Executor:
+    """
+    Sequentially executes the given commands.
+    """
+
     def __init__(self):
         self.commands = []
         self.env = Environment()
@@ -22,9 +26,13 @@ class Executor:
         """
         Executes the sequence of commands
         """
-        context = Context(env_vars=self.env)
+        if not self.commands:
+            return '', 0
+
+        context = Context(env=self.env)
+        output, ret_code = None, None
         for command in self.commands:
-            command.execute(context)
-            if context.error:
-                return context.state, context.error
-        return context.state, context.error
+            output, ret_code = command.execute(context)
+            if ret_code != 0:
+                return output, ret_code
+        return output, ret_code

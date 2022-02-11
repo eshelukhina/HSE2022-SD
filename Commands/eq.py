@@ -1,22 +1,25 @@
-from optional import Optional
+from typing import Tuple
 
 from Executor.context import Context
 
 
 class Eq:
+    """
+    Update value of environment variable.
+    """
+
     def __init__(self, src, dest):
         self.src = src
         self.dest = dest
 
-    def execute(self, context: Context) -> int:
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
         Updates value of environment variable
-        :returns: command status code
-        :rtype: int
+        :returns: Tuple of command result and status code
+        :rtype: Tuple[str, int]
         """
         context.env.add_var(name=self.dest, value=self.src)
-        context.state = Optional.empty()
-        return 0
+        return '\n', 0
 
     def __str__(self):
         return f'{self.dest} EQ {self.src}'

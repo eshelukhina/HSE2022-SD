@@ -1,14 +1,13 @@
 import pytest
 
-from parser.impl import Parser
-
-from Commands.process import Process
 from Commands.cat import Cat
 from Commands.echo import Echo
+from Commands.eq import Eq
+from Commands.exit import Exit
+from Commands.process import Process
 from Commands.pwd import Pwd
 from Commands.wc import Wc
-from Commands.exit import Exit
-from Commands.eq import Eq
+from parser.impl import Parser
 
 
 def test_empty():
@@ -54,7 +53,21 @@ def test_eq():
     ]
 
 
-def test_fail():
+def test_command_arguments():
     parser = Parser()
-    with pytest.raises(RuntimeError):
-        parser.parse(input_data="crazyInput |")
+    res = parser.parse(input_data="echo echo")
+    assert res == [
+        Echo(args=["echo"])
+    ]
+
+
+def test_fail_eq():
+    parser = Parser()
+    with pytest.raises(ValueError):
+        parser.parse(input_data="x=")
+
+
+def test_fail_single_quotes():
+    parser = Parser()
+    with pytest.raises(ValueError):
+        parser.parse(input_data="cat \"")

@@ -25,16 +25,8 @@ class Node:
 
 
 def p_expr_commands(p):
-    '''expr : CAT
-            | ECHO
-            | WC
-            | PWD
-            | EXIT
-            | CAT args
-            | ECHO args
-            | WC args
-            | PWD args
-            | EXIT args
+    '''expr : SYMBOLS
+            | SYMBOLS args
             | SYMBOLS EQ SYMBOLS
             | expr PIPE expr'''
     # todo error handling
@@ -47,20 +39,13 @@ def p_expr_commands(p):
     elif len(p) == 4 and p[2] == '|':
         p[0] = Node(node_type=Node.NodeType.none, value=None, children=[p[1], p[3]])
     else:
-        print('ERROR')
+        raise RuntimeError("Could not parse input. Something bad happened.")
 
 
 def p_expr_eq_quotes(p):
     '''expr : SYMBOLS EQ SINGLE_QUOTES
             | SYMBOLS EQ DOUBLE_QUOTES'''
     p[0] = Node(node_type=Node.NodeType.command, value=p[2], children=[p[1], p[3][1:-1]])
-
-
-def p_expr_process(p):
-    '''expr : SYMBOLS
-            | SYMBOLS args'''
-    args = [] if len(p) == 2 else p[2]
-    p[0] = Node(node_type=Node.NodeType.command, value=p[1], children=args)
 
 
 def p_args(p):
@@ -86,7 +71,7 @@ def p_arg_quotes(p):
 
 
 def p_error(p):
-    raise RuntimeError(f'Could not parse input')
+    raise ValueError(f'Could not parse input\n')
 
 
 precedence = (
