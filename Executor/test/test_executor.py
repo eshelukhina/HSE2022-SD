@@ -28,4 +28,4 @@ def test_exit():
     output, ret_code = executor.run()
     assert ret_code == 0
     assert output == command.output
-    assert executor.shell_terminated
+    assert executor.is_shell_terminated
