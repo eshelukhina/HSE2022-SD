@@ -5,7 +5,7 @@ from Executor.context import Context
 
 def test_cur_dir():
     args = ['']
-    result = os.getcwd()
+    result = os.getcwd() + '\n'
     pwd = Pwd(args=args)
     context = Context(env_vars={})
     pwd.execute(context)

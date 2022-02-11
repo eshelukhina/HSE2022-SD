@@ -12,30 +12,28 @@ def create_tmp_file(content):
     return fd, path
 
 
-def test_empty_file():
-    content = ''
+def create_file_and_run_test(content, lines, words, num_bytes):
     context = Context(env_vars={})
     fd, path = create_tmp_file(content)
     try:
         wc = Wc([path])
         wc.execute(context)
         assert context.state
-        assert context.state.get() == f'0 0 0 {path}'
+        assert context.state.get() == f'{lines} {words} {num_bytes} {path}\n'
     finally:
         os.remove(path)
+
+
+def test_empty_file():
+    content = ''
+    lines, words, num_bytes = 0, 0, 0
+    create_file_and_run_test(content, lines, words, num_bytes)
 
 
 def test_not_empty_file():
     content = ' '
-    context = Context(env_vars={})
-    fd, path = create_tmp_file(content)
-    try:
-        wc = Wc([path])
-        wc.execute(context)
-        assert context.state
-        assert context.state.get() == f'0 0 1 {path}'
-    finally:
-        os.remove(path)
+    lines, words, num_bytes = 0, 0, 1
+    create_file_and_run_test(content, lines, words, num_bytes)
 
 
 def test_with_error():
@@ -49,28 +47,14 @@ def test_with_error():
 
 def test_empty_last_line():
     content = 'hello\n'
-    context = Context(env_vars={})
-    fd, path = create_tmp_file(content)
-    try:
-        wc = Wc([path])
-        wc.execute(context)
-        assert context.state
-        assert context.state.get() == f'1 1 6 {path}'
-    finally:
-        os.remove(path)
+    lines, words, num_bytes = 1, 1, 6
+    create_file_and_run_test(content, lines, words, num_bytes)
 
 
 def test_not_empty_last_line():
     content = 'hello\nworld'
-    context = Context(env_vars={})
-    fd, path = create_tmp_file(content)
-    try:
-        wc = Wc([path])
-        wc.execute(context)
-        assert context.state
-        assert context.state.get() == f'1 2 11 {path}'
-    finally:
-        os.remove(path)
+    lines, words, num_bytes = 1, 2, 11
+    create_file_and_run_test(content, lines, words, num_bytes)
 
 
 def test_with_files():
@@ -82,7 +66,7 @@ def test_with_files():
         wc = Wc([path1, path2])
         wc.execute(context)
         assert context.state
-        assert context.state.get() == f'1 2 11 {path1}\n1 2 11 {path2}'
+        assert context.state.get() == f'1 2 11 {path1}\n1 2 11 {path2}\n'
     finally:
         os.remove(path1)
         os.remove(path2)

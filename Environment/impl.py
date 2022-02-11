@@ -4,8 +4,10 @@ from typing import NoReturn
 
 # The class responsible for keeping environment variables
 class Environment:
-    def __init__(self):
-        self.vars = {}
+    def __init__(self, vars=None):
+        if vars is None:
+            vars = {}
+        self.vars = vars
 
     def add_var(self, *, name, value) -> NoReturn:
         """

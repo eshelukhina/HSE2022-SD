@@ -17,4 +17,4 @@ class IO:
         Print output
         :param output
         """
-        print(output)
+        print(output, end='')

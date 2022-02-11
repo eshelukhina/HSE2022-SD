@@ -19,7 +19,7 @@ class Process:
         """
         command = ' '.join([self.name] + self.args)
         result = subprocess.run(
-            command, shell=True, capture_output=True, text=True, env=context.env
+            command, shell=True, capture_output=True, text=True, env=context.env.get_vars()
         )
         if result.returncode != 0:
             context.error = Optional.of(result.stderr)

@@ -17,7 +17,7 @@ def test_one_command():
     executor = Executor()
     executor.set_commands([command])
     command_output, err_output = executor.run()
-    assert command_output.get() == args[0]
+    assert command_output.get() == args[0] + '\n'
     assert not err_output
 
 

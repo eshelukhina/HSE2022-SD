@@ -34,8 +34,8 @@ class Wc:
             lines = file_content.count('\n')
             result.append(str(lines))
 
-            # Split the contents of the file into lines, then split the lines by spaces and delete the empty lines
-            words = len([y for x in file_content.split('\n') for y in x.split(' ') if y != ''])
+            # Count the number of words
+            words = len(file_content.split())
             result.append(str(words))
 
             # Transform the contents of the file into bytes and count their number
@@ -44,7 +44,7 @@ class Wc:
 
             result.append(arg)
             final_result.append(' '.join(result))
-        context.state = Optional.of('\n'.join(final_result))
+        context.state = Optional.of('\n'.join(final_result) + '\n')
         return 0
 
     def __str__(self):

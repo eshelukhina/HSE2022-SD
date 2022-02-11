@@ -15,7 +15,7 @@ class Eq:
         :rtype: int
         """
         context.env.add_var(name=self.dest, value=self.src)
-        context.state = Optional.empty()
+        context.state = Optional.of('\n')
         return 0
 
     def __str__(self):

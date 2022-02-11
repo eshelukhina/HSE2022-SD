@@ -4,7 +4,7 @@ from Executor.context import Context
 
 def test_one_arg():
     args = ["hello world !"]
-    result = "hello world !"
+    result = "hello world !\n"
     echo = Echo(args=args)
     context = Context(env_vars={})
     echo.execute(context)
@@ -14,7 +14,7 @@ def test_one_arg():
 
 def test_several_args():
     args = ["hello", "world", "!"]
-    result = "hello world !"
+    result = "hello world !\n"
     echo = Echo(args=args)
     context = Context(env_vars={})
     echo.execute(context)

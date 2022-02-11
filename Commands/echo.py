@@ -18,7 +18,7 @@ class Echo:
         :returns: command status code
         :rtype: int
         """
-        context.state = Optional.of(" ".join(self.args))
+        context.state = Optional.of(" ".join(self.args) + '\n')
         return 0
 
     def __str__(self):

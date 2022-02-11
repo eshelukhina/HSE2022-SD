@@ -19,7 +19,7 @@ class Pwd:
         :returns: command status code
         :rtype: int
         """
-        context.state = Optional.of(FileManager.get_current_directory())
+        context.state = Optional.of(FileManager.get_current_directory() + '\n')
         return 0
 
     def __str__(self):
