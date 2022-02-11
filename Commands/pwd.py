@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from optional import Optional
 
@@ -13,14 +13,13 @@ class Pwd:
         """
         self.args = args
 
-    def execute(self, context: Context) -> int:
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
         Writes current working directory in Context
         :returns: command status code
         :rtype: int
         """
-        context.state = Optional.of(FileManager.get_current_directory() + '\n')
-        return 0
+        return FileManager.get_current_directory() + '\n', 0
 
     def __str__(self):
         return f'PWD {self.args}'

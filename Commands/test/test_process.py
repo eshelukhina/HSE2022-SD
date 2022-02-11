@@ -5,25 +5,23 @@ from Executor.context import Context
 
 def test_print():
     process = Process(name='echo', args=["Hello World!"])
-    context = Context(env_vars=Environment({}))
-    process.execute(context)
-    assert context.state
-    assert context.state.get() == "Hello World!\n"
-    assert not context.error
+    context = Context()
+    output, ret_code = process.execute(context)
+    assert ret_code == 0
+    assert output == "Hello World!\n"
 
 
 def test_env():
     process = Process(name='echo', args=["$x"])
-    context = Context(env_vars=Environment({'x': 'Hello World!'}))
-    process.execute(context)
-    assert context.state
-    assert context.state.get() == "Hello World!\n"
-    assert not context.error
+    context = Context(env=Environment({'x': 'Hello World!'}))
+    output, ret_code = process.execute(context)
+    assert output == "Hello World!\n"
+    assert ret_code == 0
 
 
 def test_process_with_error():
     process = Process(name='ca', args=[])
-    context = Context(env_vars=Environment({}))
-    process.execute(context)
-    assert not context.state
-    assert context.error
+    context = Context(env=Environment({}))
+    output, ret_code = process.execute(context)
+    assert ret_code != 0
+

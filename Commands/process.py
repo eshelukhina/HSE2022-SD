@@ -1,5 +1,6 @@
 import subprocess
 
+from typing import Tuple
 from optional import Optional
 
 from Executor.context import Context
@@ -10,7 +11,7 @@ class Process:
         self.name = name
         self.args = args
 
-    def execute(self, context: Context) -> int:
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
         Execute external program.
         Save result to the Context
@@ -21,11 +22,11 @@ class Process:
         result = subprocess.run(
             command, shell=True, capture_output=True, text=True, env=context.env.get_vars()
         )
+
         if result.returncode != 0:
-            context.error = Optional.of(result.stderr)
-        else:
-            context.state = Optional.of(result.stdout)
-        return result.returncode
+            return result.stderr, result.returncode
+
+        return result.stdout, result.returncode
 
     def __str__(self):
         return f'Process name: {self.name}, args: {self.args}'

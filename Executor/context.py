@@ -4,13 +4,9 @@ from Environment.impl import Environment
 
 
 class Context:
-    def __init__(self, *, env_vars: Environment):
-        """
-        Сlass that stores the execution context of the commands.
-        :param error: command execution error message
-        :param state: result of the previous command
-        :param env_vars: enviroment
-        """
-        self.error = Optional.empty()
+    """
+        Stores the execution context of the commands.
+    """
+    def __init__(self, *, env: Environment = Environment()):
         self.state = Optional.empty()
-        self.env = env_vars
+        self.env = env

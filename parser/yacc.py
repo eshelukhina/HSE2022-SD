@@ -71,7 +71,7 @@ def p_arg_quotes(p):
 
 
 def p_error(p):
-    raise ValueError(f'Could not parse input')
+    raise ValueError(f'Could not parse input\n')
 
 
 precedence = (

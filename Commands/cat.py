@@ -1,3 +1,4 @@
+from typing import Tuple
 from optional import Optional
 
 from Executor.context import Context
@@ -11,22 +12,20 @@ class Cat:
         """
         self.args = args
 
-    def execute(self, context: Context) -> int:
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
         Check that arguments are paths to existing files.
         Retrieve the contents of these files and write it to the Context
-        :returns: command status code
+        :returns: Tuple of command result and status code
         :rtype: int
         """
         for arg in self.args:
             if not FileManager.is_file(arg):
-                context.error = Optional.of(f'cat: no such file {arg}')
-                return 2
+                return f'cat: no such file {arg}\n', 2
         result = ''
         for arg in self.args:
             result += FileManager.get_file_content(arg)
-        context.state = Optional.of(result)
-        return 0
+        return result, 0
 
     def __str__(self):
         return f'CAT {self.args}'

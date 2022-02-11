@@ -123,3 +123,13 @@ def test_eq_quotes():
         ('SINGLE_QUOTES', "'file_name.txt'"),
     ]
     compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
+
+
+def test_empty_arg():
+    tokens = tokenize(line="echo '' \"\"")
+    correct_tokens = [
+        ('SYMBOLS', 'echo'),
+        ('SINGLE_QUOTES', '\'\''),
+        ('DOUBLE_QUOTES', '\"\"'),
+    ]
+    compare_tokens(tokens=tokens, correct_tokens=correct_tokens)

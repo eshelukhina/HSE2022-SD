@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from optional import Optional
 
@@ -14,15 +14,14 @@ class Exit:
         self.args = args
         self.output = "Shell is terminated\n"
 
-    def execute(self, context: Context) -> int:
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
         Terminate the current shell
         :returns: command status code
         :rtype: int
         """
         Executor.shell_terminated = True
-        context.state = Optional.of(self.output)
-        return 0
+        return self.output, 0
 
     def __str__(self):
         return f'EXIT {self.args}'

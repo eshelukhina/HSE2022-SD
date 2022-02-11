@@ -14,12 +14,12 @@ t_EQ = r'='
 
 
 def t_SINGLE_QUOTES(t):
-    r"\'[^']+\'"
+    r"\'[^']*\'"
     return t
 
 
 def t_DOUBLE_QUOTES(t):
-    r'"[^\"]+"'
+    r'"[^\"]*"'
     return t
 
 
@@ -33,7 +33,7 @@ t_ignore = ' \t'
 
 def t_error(t):
     raise ValueError(
-        f'Could not tokenize input. Starting from line number: {t.lexer.lineno}'
+        f'Could not tokenize input. Starting from number: {t.lexer.lineno}\n'
     )
 
 

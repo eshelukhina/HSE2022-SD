@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from optional.optional import Optional
 
@@ -13,7 +13,7 @@ class Wc:
         """
         self.args = args
 
-    def execute(self, context: Context) -> int:
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
         Check that all arguments are paths to existing files.
         Retrieves the contents of these files and count the number of strings, words, and bytes for each.
@@ -23,8 +23,7 @@ class Wc:
         """
         for arg in self.args:
             if not FileManager.is_file(arg):
-                context.error = Optional.of(f'wc: no such file {arg}')
-                return 2
+                return f'wc: no such file {arg}\n', 2
         final_result = []
         for arg in self.args:
             result = []
@@ -44,8 +43,7 @@ class Wc:
 
             result.append(arg)
             final_result.append(' '.join(result))
-        context.state = Optional.of('\n'.join(final_result) + '\n')
-        return 0
+        return '\n'.join(final_result) + '\n', 0
 
     def __str__(self):
         return f'WC {self.args}'

@@ -1,3 +1,4 @@
+from typing import Tuple
 from optional import Optional
 
 from Executor.context import Context
@@ -8,15 +9,14 @@ class Eq:
         self.src = src
         self.dest = dest
 
-    def execute(self, context: Context) -> int:
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
         Updates value of environment variable
         :returns: command status code
         :rtype: int
         """
         context.env.add_var(name=self.dest, value=self.src)
-        context.state = Optional.of('\n')
-        return 0
+        return '\n', 0
 
     def __str__(self):
         return f'{self.dest} EQ {self.src}'
