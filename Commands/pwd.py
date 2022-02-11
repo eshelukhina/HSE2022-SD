@@ -17,9 +17,9 @@ class Pwd:
 
     def execute(self, context: Context) -> Tuple[str, int]:
         """
-        Writes current working directory in Context
-        :returns: command status code
-        :rtype: int
+        Return working directory
+        :returns: Tuple of command result and status code
+        :rtype: Tuple[str, int]
         """
         return FileManager.get_current_directory() + '\n', 0
 

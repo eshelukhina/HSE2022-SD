@@ -17,8 +17,8 @@ class Echo:
     def execute(self, context: Context) -> Tuple[str, int]:
         """
         Return command arguments
-        :returns: command status code
-        :rtype: int
+        :returns: Tuple of command result and status code
+        :rtype: Tuple[str, int]
         """
         result = " ".join(self.args) + '\n'
         return result, 0

@@ -19,8 +19,8 @@ class Exit:
     def execute(self, context: Context) -> Tuple[str, int]:
         """
         Terminate the current shell
-        :returns: command status code
-        :rtype: int
+        :returns: Tuple of command result and status code
+        :rtype: Tuple[str, int]
         """
         Executor.shell_terminated = True
         return self.output, 0

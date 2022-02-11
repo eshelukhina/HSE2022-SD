@@ -17,9 +17,8 @@ class Process:
     def execute(self, context: Context) -> Tuple[str, int]:
         """
         Execute external program.
-        Save result to the Context
-        :returns: command status code
-        :rtype: int
+        :returns: Tuple of command result and status code
+        :rtype: Tuple[str, int]
         """
         command = ' '.join([self.name] + self.args)
         result = subprocess.run(

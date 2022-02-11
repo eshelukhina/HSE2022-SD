@@ -18,9 +18,9 @@ class Cat:
     def execute(self, context: Context) -> Tuple[str, int]:
         """
         Check that arguments are paths to existing files.
-        Retrieve the contents of these files and write it to the Context
+        Return the contents of these files
         :returns: Tuple of command result and status code
-        :rtype: int
+        :rtype: Tuple[str, int]
         """
         for arg in self.args:
             if not FileManager.is_file(arg):

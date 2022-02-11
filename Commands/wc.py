@@ -18,10 +18,9 @@ class Wc:
     def execute(self, context: Context) -> Tuple[str, int]:
         """
         Check that all arguments are paths to existing files.
-        Retrieves the contents of these files and count the number of strings, words, and bytes for each.
-        Save the result to the Context
-        :returns: command status code
-        :rtype: int
+        Retrieves the contents of these files and return count the number of lines, words, and bytes for each.
+        :returns: Tuple of command result and status code
+        :rtype: Tuple[str, int]
         """
         for arg in self.args:
             if not FileManager.is_file(arg):

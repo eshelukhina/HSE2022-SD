@@ -15,8 +15,8 @@ class Eq:
     def execute(self, context: Context) -> Tuple[str, int]:
         """
         Updates value of environment variable
-        :returns: command status code
-        :rtype: int
+        :returns: Tuple of command result and status code
+        :rtype: Tuple[str, int]
         """
         context.env.add_var(name=self.dest, value=self.src)
         return '\n', 0
