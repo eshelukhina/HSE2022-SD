@@ -1,3 +1,6 @@
+import sys
+
+
 class IO:
     def __init__(self):
         pass
@@ -5,11 +8,19 @@ class IO:
     @staticmethod
     def read():
         """
-        Read user input
+        Read user input and return him.
+        Print empty line and return None if a signal SIGINT was sent.
+        Print empty line and exit if an empty line was entered
         :rtype str
         """
-        user_input = input(">>> ")
-        return user_input
+        try:
+            return input(">>> ")
+        except KeyboardInterrupt:
+            print('')
+            return None
+        except EOFError:
+            print('')
+            sys.exit(0)
 
     @staticmethod
     def write(output: str):

@@ -13,7 +13,9 @@ class App:
         Run shell emulator
         """
         while not self.executor.shell_terminated:
-            user_input = IO.read()
+            user_input = None
+            while user_input is None:
+                user_input = IO.read()
             try:
                 commands = self.parser.parse(input_data=user_input)
             except ValueError as v_err:
