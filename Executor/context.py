@@ -1,8 +1,13 @@
 from optional import Optional
 
+from Environment.impl import Environment
+
 
 class Context:
-    def __init__(self, *, env_vars):
-        self.error = Optional.empty()
+    """
+    Stores the execution context of the commands.
+    """
+
+    def __init__(self, *, env: Environment = Environment()):
         self.state = Optional.empty()
-        self.env = env_vars
+        self.env = env

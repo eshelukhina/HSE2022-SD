@@ -1,31 +1,34 @@
 import subprocess
-
-from optional import Optional
+from typing import Tuple
 
 from Executor.context import Context
 
 
 class Process:
+    """
+    The process command allows you to spawn new processes, connect to their input/output/error pipes,
+    and obtain their return codes.
+    """
+
     def __init__(self, *, name, args):
         self.name = name
         self.args = args
 
-    def execute(self, context: Context) -> int:
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
         Execute external program.
-        Save result to the Context
-        :returns: command status code
-        :rtype: int
+        :returns: Tuple of command result and status code
+        :rtype: Tuple[str, int]
         """
         command = ' '.join([self.name] + self.args)
         result = subprocess.run(
-            command, shell=True, capture_output=True, text=True, env=context.env
+            command, shell=True, capture_output=True, text=True, env=context.env.get_vars()
         )
+
         if result.returncode != 0:
-            context.error = Optional.of(result.stderr)
-        else:
-            context.state = Optional.of(result.stdout)
-        return result.returncode
+            return result.stderr, result.returncode
+
+        return result.stdout, result.returncode
 
     def __str__(self):
         return f'Process name: {self.name}, args: {self.args}'
