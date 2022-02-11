@@ -12,13 +12,6 @@ def test_is_file():
     assert FileManager.is_file(file.name) is False and os.path.exists(file.name) is False
 
 
-def test_is_directory():
-    directory = tempfile.TemporaryDirectory()
-    assert FileManager.is_directory(directory.name) is True and os.path.exists(directory.name) is True
-    directory.cleanup()
-    assert FileManager.is_directory(directory.name) is False and os.path.exists(directory.name) is False
-
-
 def test_get_file_content():
     content = "HelloWorld"
     fd, path = tempfile.mkstemp()

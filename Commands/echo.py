@@ -1,25 +1,27 @@
-from typing import List
-
-from optional import Optional
+from typing import List, Tuple
 
 from Executor.context import Context
 
 
 class Echo:
+    """
+    Return the given arguments.
+    """
+
     def __init__(self, args: List[str]):
         """
         :param args: command arguments
         """
         self.args = args
 
-    def execute(self, context: Context) -> int:
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
-        Writes command arguments in Context
-        :returns: command status code
-        :rtype: int
+        Return command arguments
+        :returns: Tuple of command result and status code
+        :rtype: Tuple[str, int]
         """
-        context.state = Optional.of(" ".join(self.args))
-        return 0
+        result = " ".join(self.args) + '\n'
+        return result, 0
 
     def __str__(self):
         return f'ECHO {self.args}'

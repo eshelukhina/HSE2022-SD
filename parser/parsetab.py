@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPIPECAT DOUBLE_QUOTES ECHO EQ EXIT PIPE PWD SINGLE_QUOTES SYMBOLS WCexpr : CAT\n            | ECHO\n            | WC\n            | PWD\n            | EXIT\n            | CAT args\n            | ECHO args\n            | WC args\n            | PWD args\n            | EXIT args\n            | SYMBOLS EQ SYMBOLS\n            | expr PIPE exprexpr : SYMBOLS EQ SINGLE_QUOTES\n            | SYMBOLS EQ DOUBLE_QUOTESexpr : SYMBOLS\n            | SYMBOLS args args : arg\n             | args argarg : SYMBOLSarg  : SINGLE_QUOTES\n            | DOUBLE_QUOTES'
+_lr_signature = 'leftPIPEDOUBLE_QUOTES EQ PIPE SINGLE_QUOTES SYMBOLSexpr : SYMBOLS\n            | SYMBOLS args\n            | SYMBOLS EQ SYMBOLS\n            | expr PIPE exprexpr : SYMBOLS EQ SINGLE_QUOTES\n            | SYMBOLS EQ DOUBLE_QUOTES args : arg\n             | args argarg : SYMBOLSarg  : SINGLE_QUOTES\n            | DOUBLE_QUOTES'
     
-_lr_action_items = {'CAT':([0,8,],[2,2,]),'ECHO':([0,8,],[3,3,]),'WC':([0,8,],[4,4,]),'PWD':([0,8,],[5,5,]),'EXIT':([0,8,],[6,6,]),'SYMBOLS':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,21,],[7,11,11,11,11,11,11,7,11,-17,-19,-20,-21,11,11,11,11,22,11,-18,]),'$end':([1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,19,20,21,22,23,24,],[0,-1,-2,-3,-4,-5,-15,-6,-17,-19,-20,-21,-7,-8,-9,-10,-16,-12,-18,-11,-13,-14,]),'PIPE':([1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,19,20,21,22,23,24,],[8,-1,-2,-3,-4,-5,-15,-6,-17,-19,-20,-21,-7,-8,-9,-10,-16,-12,-18,-11,-13,-14,]),'SINGLE_QUOTES':([2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,21,],[12,12,12,12,12,12,12,-17,-19,-20,-21,12,12,12,12,23,12,-18,]),'DOUBLE_QUOTES':([2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,21,],[13,13,13,13,13,13,13,-17,-19,-20,-21,13,13,13,13,24,13,-18,]),'EQ':([7,],[18,]),}
+_lr_action_items = {'SYMBOLS':([0,2,3,4,5,6,7,8,9,11,],[2,4,2,-9,4,12,-10,-11,-7,-8,]),'$end':([1,2,4,5,7,8,9,10,11,12,13,14,],[0,-1,-9,-2,-10,-11,-7,-4,-8,-3,-5,-6,]),'PIPE':([1,2,4,5,7,8,9,10,11,12,13,14,],[3,-1,-9,-2,-10,-11,-7,-4,-8,-3,-5,-6,]),'EQ':([2,],[6,]),'SINGLE_QUOTES':([2,4,5,6,7,8,9,11,],[7,-9,7,13,-10,-11,-7,-8,]),'DOUBLE_QUOTES':([2,4,5,6,7,8,9,11,],[8,-9,8,14,-10,-11,-7,-8,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expr':([0,8,],[1,20,]),'args':([2,3,4,5,6,7,],[9,14,15,16,17,19,]),'arg':([2,3,4,5,6,7,9,14,15,16,17,19,],[10,10,10,10,10,10,21,21,21,21,21,21,]),}
+_lr_goto_items = {'expr':([0,3,],[1,10,]),'args':([2,],[5,]),'arg':([2,5,],[9,11,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,25 +27,15 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> expr","S'",1,None,None,None),
-  ('expr -> CAT','expr',1,'p_expr_commands','yacc.py',28),
-  ('expr -> ECHO','expr',1,'p_expr_commands','yacc.py',29),
-  ('expr -> WC','expr',1,'p_expr_commands','yacc.py',30),
-  ('expr -> PWD','expr',1,'p_expr_commands','yacc.py',31),
-  ('expr -> EXIT','expr',1,'p_expr_commands','yacc.py',32),
-  ('expr -> CAT args','expr',2,'p_expr_commands','yacc.py',33),
-  ('expr -> ECHO args','expr',2,'p_expr_commands','yacc.py',34),
-  ('expr -> WC args','expr',2,'p_expr_commands','yacc.py',35),
-  ('expr -> PWD args','expr',2,'p_expr_commands','yacc.py',36),
-  ('expr -> EXIT args','expr',2,'p_expr_commands','yacc.py',37),
-  ('expr -> SYMBOLS EQ SYMBOLS','expr',3,'p_expr_commands','yacc.py',38),
-  ('expr -> expr PIPE expr','expr',3,'p_expr_commands','yacc.py',39),
-  ('expr -> SYMBOLS EQ SINGLE_QUOTES','expr',3,'p_expr_eq_quotes','yacc.py',54),
-  ('expr -> SYMBOLS EQ DOUBLE_QUOTES','expr',3,'p_expr_eq_quotes','yacc.py',55),
-  ('expr -> SYMBOLS','expr',1,'p_expr_process','yacc.py',60),
-  ('expr -> SYMBOLS args','expr',2,'p_expr_process','yacc.py',61),
-  ('args -> arg','args',1,'p_args','yacc.py',67),
-  ('args -> args arg','args',2,'p_args','yacc.py',68),
-  ('arg -> SYMBOLS','arg',1,'p_arg','yacc.py',78),
-  ('arg -> SINGLE_QUOTES','arg',1,'p_arg_quotes','yacc.py',83),
-  ('arg -> DOUBLE_QUOTES','arg',1,'p_arg_quotes','yacc.py',84),
+  ('expr -> SYMBOLS','expr',1,'p_expr_commands','yacc.py',28),
+  ('expr -> SYMBOLS args','expr',2,'p_expr_commands','yacc.py',29),
+  ('expr -> SYMBOLS EQ SYMBOLS','expr',3,'p_expr_commands','yacc.py',30),
+  ('expr -> expr PIPE expr','expr',3,'p_expr_commands','yacc.py',31),
+  ('expr -> SYMBOLS EQ SINGLE_QUOTES','expr',3,'p_expr_eq_quotes','yacc.py',48),
+  ('expr -> SYMBOLS EQ DOUBLE_QUOTES','expr',3,'p_expr_eq_quotes','yacc.py',49),
+  ('args -> arg','args',1,'p_args','yacc.py',54),
+  ('args -> args arg','args',2,'p_args','yacc.py',55),
+  ('arg -> SYMBOLS','arg',1,'p_arg','yacc.py',65),
+  ('arg -> SINGLE_QUOTES','arg',1,'p_arg_quotes','yacc.py',70),
+  ('arg -> DOUBLE_QUOTES','arg',1,'p_arg_quotes','yacc.py',71),
 ]

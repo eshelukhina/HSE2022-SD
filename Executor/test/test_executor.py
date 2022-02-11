@@ -6,9 +6,9 @@ from Executor.executor import Executor
 def test_no_commands():
     executor = Executor()
     executor.set_commands([])
-    command_output, err_output = executor.run()
-    assert not command_output
-    assert not err_output
+    output, ret_code = executor.run()
+    assert ret_code == 0
+    assert output == ""
 
 
 def test_one_command():
@@ -16,16 +16,16 @@ def test_one_command():
     command = Echo(args=args)
     executor = Executor()
     executor.set_commands([command])
-    command_output, err_output = executor.run()
-    assert command_output.get() == args[0]
-    assert not err_output
+    output, ret_code = executor.run()
+    assert ret_code == 0
+    assert output == args[0] + '\n'
 
 
 def test_exit():
     command = Exit(args=[])
     executor = Executor()
     executor.set_commands([command])
-    command_output, err_output = executor.run()
-    assert command_output.get() == command.output
+    output, ret_code = executor.run()
+    assert ret_code == 0
+    assert output == command.output
     assert executor.shell_terminated
-    assert not err_output
