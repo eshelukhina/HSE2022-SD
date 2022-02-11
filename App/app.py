@@ -14,7 +14,17 @@ class App:
         """
         while not self.executor.shell_terminated:
             user_input = IO.read()
-            commands = self.parser.parse(input_data=user_input)
-            self.executor.set_commands(commands)
+            try:
+                commands = self.parser.parse(input_data=user_input)
+                self.executor.set_commands(commands)
+            except ValueError as v_err:
+                IO.write(str(v_err))
+                continue
+
             command_output, err_output = self.executor.run()
-            IO.write(command_output, err_output)
+            if err_output:
+                IO.write(err_output.get())
+            elif command_output:
+                IO.write(command_output.get())
+            else:
+                IO.write('')

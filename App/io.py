@@ -12,15 +12,9 @@ class IO:
         return user_input
 
     @staticmethod
-    def write(user_output, err_output):
+    def write(output: str):
         """
-        Print command output
-        :param user_output: successful command output
-        :param err_output: failed command output
+        Print output
+        :param output
         """
-        if err_output:
-            print(f"{err_output.get()}")
-        elif user_output:
-            print(f"{user_output.get()}")
-        else:
-            print('', end='')
+        print(output)

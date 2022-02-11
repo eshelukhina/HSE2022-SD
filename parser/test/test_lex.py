@@ -21,19 +21,19 @@ def compare_tokens(*, tokens: List[LexToken], correct_tokens: List[Tuple[str, st
 def test_command():
     tokens = tokenize(line='wc cat echo pwd exit')
     correct_tokens = [
-        ('WC', 'wc'),
-        ('CAT', 'cat'),
-        ('ECHO', 'echo'),
-        ('PWD', 'pwd'),
-        ('EXIT', 'exit'),
+        ('SYMBOLS', 'wc'),
+        ('SYMBOLS', 'cat'),
+        ('SYMBOLS', 'echo'),
+        ('SYMBOLS', 'pwd'),
+        ('SYMBOLS', 'exit'),
     ]
     compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
 
 
-def test_symbols():
+def test_symbol_args():
     tokens = tokenize(line='cat arg1 $varName10 arg3')
     correct_tokens = [
-        ('CAT', 'cat'),
+        ('SYMBOLS', 'cat'),
         ('SYMBOLS', 'arg1'),
         ('SYMBOLS', '$varName10'),
         ('SYMBOLS', 'arg3'),
@@ -44,7 +44,7 @@ def test_symbols():
 def test_double_quotes():
     tokens = tokenize(line='echo "$varName" "arg2""arg3" "the cat says \'$x\'" just_symbols')
     correct_tokens = [
-        ('ECHO', 'echo'),
+        ('SYMBOLS', 'echo'),
         ('DOUBLE_QUOTES', '"$varName"'),
         ('DOUBLE_QUOTES', '"arg2"'),
         ('DOUBLE_QUOTES', '"arg3"'),
@@ -57,7 +57,7 @@ def test_double_quotes():
 def test_single_quotes():
     tokens = tokenize(line="echo '$varName' 'arg1''arg3' just_symbols")
     correct_tokens = [
-        ('ECHO', 'echo'),
+        ('SYMBOLS', 'echo'),
         ('SINGLE_QUOTES', "'$varName'"),
         ('SINGLE_QUOTES', "'arg1'"),
         ('SINGLE_QUOTES', "'arg3'"),
@@ -69,12 +69,12 @@ def test_single_quotes():
 def test_pipe():
     tokens = tokenize(line='echo file_name.txt | cat | exit')
     correct_tokens = [
-        ('ECHO', 'echo'),
+        ('SYMBOLS', 'echo'),
         ('SYMBOLS', 'file_name.txt'),
         ('PIPE', '|'),
-        ('CAT', 'cat'),
+        ('SYMBOLS', 'cat'),
         ('PIPE', '|'),
-        ('EXIT', 'exit')
+        ('SYMBOLS', 'exit')
     ]
     compare_tokens(tokens=tokens, correct_tokens=correct_tokens)
 

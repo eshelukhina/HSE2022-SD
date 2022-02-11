@@ -54,7 +54,15 @@ def test_eq():
     ]
 
 
-def test_fail():
+def test_command_arguments():
     parser = Parser()
-    with pytest.raises(RuntimeError):
-        parser.parse(input_data="crazyInput |")
+    res = parser.parse(input_data="echo echo")
+    assert res == [
+        Echo(args=["echo"])
+    ]
+
+
+def test_fail_eq():
+    parser = Parser()
+    with pytest.raises(ValueError):
+        parser.parse(input_data="x=")
