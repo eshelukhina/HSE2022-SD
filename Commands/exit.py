@@ -22,7 +22,7 @@ class Exit:
         :returns: Tuple of command result and status code
         :rtype: Tuple[str, int]
         """
-        Executor.shell_terminated = True
+        Executor.is_shell_terminated = True
         return self.output, 0
 
     def __str__(self):
