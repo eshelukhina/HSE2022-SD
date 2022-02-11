@@ -13,7 +13,7 @@ class Executor:
         self.commands = []
         self.env = Environment()
 
-    shell_terminated = False
+    is_shell_terminated = False
 
     def set_commands(self, commands: List):
         """

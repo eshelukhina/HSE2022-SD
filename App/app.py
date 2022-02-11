@@ -18,7 +18,7 @@ class App:
         """
         Run shell emulator
         """
-        while not self.executor.shell_terminated:
+        while not self.executor.is_shell_terminated:
             user_input = None
             while user_input is None:
                 try:
