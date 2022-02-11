@@ -1,7 +1,7 @@
 from typing import List, Tuple, NoReturn
 
-import pytest
 from ply.lex import LexToken
+
 from parser.lex import lexer
 
 

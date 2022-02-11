@@ -24,4 +24,3 @@ def test_process_with_error():
     context = Context(env=Environment({}))
     output, ret_code = process.execute(context)
     assert ret_code != 0
-

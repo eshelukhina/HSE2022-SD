@@ -2,6 +2,10 @@ import sys
 
 
 class IO:
+    """
+    Component responsible for communication with the outside world.
+    """
+
     def __init__(self):
         pass
 

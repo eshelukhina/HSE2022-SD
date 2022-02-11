@@ -1,12 +1,14 @@
 from typing import List, Tuple
 
-from optional import Optional
-
 from Executor.context import Context
 from Executor.executor import Executor
 
 
 class Exit:
+    """
+    Exit the application.
+    """
+
     def __init__(self, args: List[str]):
         """
         :param args: command arguments

@@ -1,14 +1,13 @@
 import pytest
 
-from parser.impl import Parser
-
-from Commands.process import Process
 from Commands.cat import Cat
 from Commands.echo import Echo
+from Commands.eq import Eq
+from Commands.exit import Exit
+from Commands.process import Process
 from Commands.pwd import Pwd
 from Commands.wc import Wc
-from Commands.exit import Exit
-from Commands.eq import Eq
+from parser.impl import Parser
 
 
 def test_empty():

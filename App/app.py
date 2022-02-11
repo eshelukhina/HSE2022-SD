@@ -4,6 +4,10 @@ from parser.impl import Parser
 
 
 class App:
+    """
+    Shell emulator.
+    """
+
     def __init__(self):
         self.parser = Parser()
         self.executor = Executor()

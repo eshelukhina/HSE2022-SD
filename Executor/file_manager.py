@@ -3,6 +3,10 @@ from os import path
 
 
 class FileManager:
+    """
+    The component responsible for working with the file system.
+    """
+
     @staticmethod
     def is_file(path_to_file):
         return path.isfile(path_to_file)

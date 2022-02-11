@@ -5,6 +5,10 @@ from Environment.impl import Environment
 
 
 class Executor:
+    """
+    Sequentially executes the given commands.
+    """
+
     def __init__(self):
         self.commands = []
         self.env = Environment()

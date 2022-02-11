@@ -2,8 +2,11 @@ import copy
 from typing import NoReturn
 
 
-# The class responsible for keeping environment variables
 class Environment:
+    """
+    The class responsible for keeping environment variables.
+    """
+
     def __init__(self, vars=None):
         if vars is None:
             vars = {}

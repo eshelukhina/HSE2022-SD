@@ -1,12 +1,14 @@
 from typing import List, Tuple
 
-from optional import Optional
-
 from Executor.context import Context
 from Executor.file_manager import FileManager
 
 
 class Pwd:
+    """
+    Return the current directory.
+    """
+
     def __init__(self, args: List[str]):
         """
         :param args: command arguments

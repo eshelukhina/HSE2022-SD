@@ -1,11 +1,13 @@
 from typing import List, Tuple
 
-from optional import Optional
-
 from Executor.context import Context
 
 
 class Echo:
+    """
+    Return the given arguments in one line.
+    """
+
     def __init__(self, args: List[str]):
         """
         :param args: command arguments
@@ -14,7 +16,7 @@ class Echo:
 
     def execute(self, context: Context) -> Tuple[str, int]:
         """
-        Writes command arguments in Context
+        Return command arguments in one line
         :returns: command status code
         :rtype: int
         """

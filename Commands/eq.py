@@ -1,10 +1,13 @@
 from typing import Tuple
-from optional import Optional
 
 from Executor.context import Context
 
 
 class Eq:
+    """
+    Update value of environment variable.
+    """
+
     def __init__(self, src, dest):
         self.src = src
         self.dest = dest

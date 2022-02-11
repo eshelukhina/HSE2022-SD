@@ -1,7 +1,6 @@
 import os
 import tempfile
 
-from Environment.impl import Environment
 from Commands.cat import Cat
 from Executor.context import Context
 

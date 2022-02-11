@@ -1,12 +1,15 @@
 import subprocess
-
 from typing import Tuple
-from optional import Optional
 
 from Executor.context import Context
 
 
 class Process:
+    """
+    The process command allows you to spawn new processes, connect to their input/output/error pipes,
+    and obtain their return codes.
+    """
+
     def __init__(self, *, name, args):
         self.name = name
         self.args = args

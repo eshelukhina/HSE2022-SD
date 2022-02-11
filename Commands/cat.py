@@ -1,11 +1,14 @@
 from typing import Tuple
-from optional import Optional
 
 from Executor.context import Context
 from Executor.file_manager import FileManager
 
 
 class Cat:
+    """
+    Get file contents.
+    """
+
     def __init__(self, args):
         """
         :param args: command arguments

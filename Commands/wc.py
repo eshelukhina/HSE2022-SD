@@ -1,12 +1,14 @@
 from typing import List, Tuple
 
-from optional.optional import Optional
-
 from Executor.context import Context
 from Executor.file_manager import FileManager
 
 
 class Wc:
+    """
+    Count the number of lines, words and bytes in given files.
+    """
+
     def __init__(self, args: List[str]):
         """
         :param args: command arguments
