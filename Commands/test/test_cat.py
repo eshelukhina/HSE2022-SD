@@ -18,9 +18,9 @@ def test_empty_file():
     fd, path = create_tmp_file(content)
     try:
         cat = Cat([path])
-        output, ret_code = cat.execute(context)
+        ret_code = cat.execute(context)
         assert ret_code == 0
-        assert not output
+        assert not context.state.get()
     finally:
         os.remove(path)
 
@@ -31,9 +31,9 @@ def test_not_empty_file():
     fd, path = create_tmp_file(content)
     try:
         cat = Cat([path])
-        output, ret_code = cat.execute(context)
+        ret_code = cat.execute(context)
         assert ret_code == 0
-        assert output == content
+        assert content == context.state.get()
     finally:
         os.remove(path)
 
@@ -42,10 +42,9 @@ def test_with_error():
     error = 'cat: no such file f\n'
     context = Context()
     cat = Cat(['f'])
-    output, ret_code = cat.execute(context)
-    assert not context.state
+    ret_code = cat.execute(context)
     assert ret_code == 2
-    assert output == error
+    assert context.state.get() == error
 
 
 def test_with_files():
@@ -55,9 +54,9 @@ def test_with_files():
     fd2, path2 = create_tmp_file(content)
     try:
         cat = Cat([path1, path2])
-        output, ret_code = cat.execute(context)
+        ret_code = cat.execute(context)
         assert ret_code == 0
-        assert output == 'helloworld\nhelloworld\n'
+        assert context.state.get() == 'helloworld\nhelloworld\n'
     finally:
         os.remove(path1)
         os.remove(path2)

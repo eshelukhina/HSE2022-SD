@@ -32,7 +32,8 @@ class Executor:
         context = Context(env=self.env)
         output, ret_code = None, None
         for command in self.commands:
-            output, ret_code = command.execute(context)
+            Executor.is_shell_terminated = False
+            ret_code = command.execute(context)
             if ret_code != 0:
-                return output, ret_code
-        return output, ret_code
+                return context.state, ret_code
+        return context.state, ret_code

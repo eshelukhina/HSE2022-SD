@@ -1,3 +1,6 @@
+from optional import Optional
+
+
 class IO:
     """
     Component responsible for communication with the outside world.
@@ -15,9 +18,9 @@ class IO:
         return input(">>> ")
 
     @staticmethod
-    def write(output: str):
+    def write(output: Optional):
         """
         Print output
         :param output
         """
-        print(output, end='')
+        print(output.get(), end='\n')

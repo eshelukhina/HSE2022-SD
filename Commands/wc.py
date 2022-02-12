@@ -1,5 +1,7 @@
 from typing import List, Tuple
 
+from optional import Optional
+
 from Executor.context import Context
 from Executor.file_manager import FileManager
 
@@ -15,36 +17,42 @@ class Wc:
         """
         self.args = args
 
-    def execute(self, context: Context) -> Tuple[str, int]:
+    def execute(self, context: Context) -> int:
         """
         Check that all arguments are paths to existing files.
         Retrieves the contents of these files and return count the number of lines, words, and bytes for each.
         :returns: Tuple of command result and status code
-        :rtype: Tuple[str, int]
+        :rtype: int
         """
-        for arg in self.args:
-            if not FileManager.is_file(arg):
-                return f'wc: no such file {arg}\n', 2
-        final_result = []
-        for arg in self.args:
-            result = []
-            file_content = FileManager.get_file_content(arg)
+        if len(self.args) > 0:
+            for arg in self.args:
+                if not FileManager.is_file(arg):
+                    context.state = Optional.of(f'wc: no such file {arg}')
+                    return 2
 
+        if len(self.args) > 0:
+            args = zip([FileManager.get_file_content(arg) for arg in self.args], self.args)
+        else:
+            args = zip([''.join(context.state.get()) + '\n'], [''])
+        final_result = []
+        for arg, file_name in args:
+            result = []
             # Count the number of lines as the number of newline characters
-            lines = file_content.count('\n')
+            lines = arg.count('\n')
             result.append(str(lines))
 
             # Count the number of words
-            words = len(file_content.split())
+            words = len(arg.split())
             result.append(str(words))
 
             # Transform the contents of the file into bytes and count their number
-            num_bytes = len(file_content.encode())
+            num_bytes = len(arg.encode())
             result.append(str(num_bytes))
 
-            result.append(arg)
+            result.append(file_name)
             final_result.append(' '.join(result))
-        return '\n'.join(final_result) + '\n', 0
+        context.state = Optional.of('\n'.join(final_result))
+        return 0
 
     def __str__(self):
         return f'WC {self.args}'
