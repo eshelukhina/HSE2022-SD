@@ -4,10 +4,13 @@ from Environment.impl import environment
 
 
 class Substitution:
+    """
+    Substitution of variables in the input string and handling double and single quotes
+    """
+
     SINGLE_QUOTE = "'"
     DOUBLE_QUOTE = '"'
     DOLLAR = "$"
-    alphabet = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
     env = environment
 
     def __init__(self):
@@ -76,7 +79,7 @@ class Substitution:
             i += 1
         if i >= len(s):
             if s[i - 1] == quote:
-                sub_s = s[i_start + 1:i - 1]
+                sub_s = s[i_start:i]
                 if quote == self.SINGLE_QUOTE:
                     res = sub_s
                 else:
@@ -84,7 +87,7 @@ class Substitution:
             else:
                 raise Exception("1")
         elif s[i] == quote:
-            sub_s = s[i_start + 1:i]
+            sub_s = s[i_start:i + 1]
             if quote == self.SINGLE_QUOTE:
                 res = sub_s
             else:
@@ -99,6 +102,8 @@ class Substitution:
         else:
             return self.substitute_quotes(input_str)
 
+#
 # if __name__ == '__main__':
 #     a = Substitution()
-#     print(a.substitute("echo '$x'"))
+#     inp = "echo '\"'$x'\"'"
+#     print(a.substitute(inp))
