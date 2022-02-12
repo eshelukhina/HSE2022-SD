@@ -14,50 +14,50 @@ def create_tmp_file(content):
 
 def test_empty_file():
     content = ''
-    context = Context(1)
+    context = Context()
     fd, path = create_tmp_file(content)
     try:
         cat = Cat([path])
-        cat.execute(context)
-        assert context.state.is_present() is True
-        assert context.state.get() == content
+        output, ret_code = cat.execute(context)
+        assert ret_code == 0
+        assert not output
     finally:
         os.remove(path)
 
 
 def test_not_empty_file():
     content = 'helloworld\n'
-    context = Context(1)
+    context = Context()
     fd, path = create_tmp_file(content)
     try:
         cat = Cat([path])
-        cat.execute(context)
-        assert context.state.is_present() is True
-        assert context.state.get() == content
+        output, ret_code = cat.execute(context)
+        assert ret_code == 0
+        assert output == content
     finally:
         os.remove(path)
 
 
 def test_with_error():
-    error = 'cat: f: No such file'
-    context = Context(1)
+    error = 'cat: no such file f\n'
+    context = Context()
     cat = Cat(['f'])
-    cat.execute(context)
-    assert context.state.is_empty() is True
-    assert context.error.is_present() is True
-    assert context.error.get() == error
+    output, ret_code = cat.execute(context)
+    assert not context.state
+    assert ret_code == 2
+    assert output == error
 
 
 def test_with_files():
     content = 'helloworld\n'
-    context = Context(1)
+    context = Context()
     fd1, path1 = create_tmp_file(content)
     fd2, path2 = create_tmp_file(content)
     try:
         cat = Cat([path1, path2])
-        cat.execute(context)
-        assert context.state.is_present() is True
-        assert context.state.get() == 'helloworld\nhelloworld\n'
+        output, ret_code = cat.execute(context)
+        assert ret_code == 0
+        assert output == 'helloworld\nhelloworld\n'
     finally:
         os.remove(path1)
         os.remove(path2)

@@ -1,23 +1,27 @@
-from typing import List
-
-from optional import Optional
+from typing import List, Tuple
 
 from Executor.context import Context
 from Executor.file_manager import FileManager
 
 
 class Pwd:
+    """
+    Return the current directory.
+    """
+
     def __init__(self, args: List[str]):
         """
         :param args: command arguments
         """
         self.args = args
 
-    def execute(self, context: Context):
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
-        Get current working directory
+        Return working directory
+        :returns: Tuple of command result and status code
+        :rtype: Tuple[str, int]
         """
-        context.state = Optional.of(FileManager.get_current_directory())
+        return FileManager.get_current_directory() + '\n', 0
 
     def __str__(self):
         return f'PWD {self.args}'

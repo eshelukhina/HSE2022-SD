@@ -1,13 +1,14 @@
 import os
+
 from Commands.pwd import Pwd
 from Executor.context import Context
 
 
 def test_cur_dir():
     args = ['']
-    result = os.getcwd()
+    result = os.getcwd() + '\n'
     pwd = Pwd(args=args)
-    context = Context(1)
-    pwd.execute(context)
-    assert context.state.get() == result
-    assert context.error.is_empty() is True
+    context = Context()
+    output, ret_code = pwd.execute(context)
+    assert ret_code == 0
+    assert output == result

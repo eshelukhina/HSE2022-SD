@@ -1,28 +1,30 @@
-from typing import List
-
-from optional.optional import Optional
+from typing import List, Tuple
 
 from Executor.context import Context
 from Executor.file_manager import FileManager
 
 
 class Wc:
+    """
+    Count the number of lines, words and bytes in given files.
+    """
+
     def __init__(self, args: List[str]):
         """
         :param args: command arguments
         """
         self.args = args
 
-    def execute(self, context: Context):
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
         Check that all arguments are paths to existing files.
-        Retrieves the contents of these files and count the number of strings, words, and bytes for each.
-        Save the result to the Context
+        Retrieves the contents of these files and return count the number of lines, words, and bytes for each.
+        :returns: Tuple of command result and status code
+        :rtype: Tuple[str, int]
         """
         for arg in self.args:
             if not FileManager.is_file(arg):
-                context.error = Optional.of(f'wc: {arg}: No such file')
-                return
+                return f'wc: no such file {arg}\n', 2
         final_result = []
         for arg in self.args:
             result = []
@@ -32,8 +34,8 @@ class Wc:
             lines = file_content.count('\n')
             result.append(str(lines))
 
-            # Split the contents of the file into lines, then split the lines by spaces and delete the empty lines
-            words = len([y for x in file_content.split('\n') for y in x.split(' ') if y != ''])
+            # Count the number of words
+            words = len(file_content.split())
             result.append(str(words))
 
             # Transform the contents of the file into bytes and count their number
@@ -42,7 +44,7 @@ class Wc:
 
             result.append(arg)
             final_result.append(' '.join(result))
-        context.state = Optional.of('\n'.join(final_result))
+        return '\n'.join(final_result) + '\n', 0
 
     def __str__(self):
         return f'WC {self.args}'

@@ -12,77 +12,61 @@ def create_tmp_file(content):
     return fd, path
 
 
-def test_empty_file():
-    content = ''
-    context = Context(1)
+def create_file_and_run_test(content, lines, words, num_bytes):
+    context = Context()
     fd, path = create_tmp_file(content)
     try:
         wc = Wc([path])
-        wc.execute(context)
-        assert context.state.is_present() is True
-        assert context.state.get() == f'0 0 0 {path}'
+        output, ret_code = wc.execute(context)
+        assert ret_code == 0
+        assert output == f'{lines} {words} {num_bytes} {path}\n'
     finally:
         os.remove(path)
+
+
+def test_empty_file():
+    content = ''
+    lines, words, num_bytes = 0, 0, 0
+    create_file_and_run_test(content, lines, words, num_bytes)
 
 
 def test_not_empty_file():
     content = ' '
-    context = Context(1)
-    fd, path = create_tmp_file(content)
-    try:
-        wc = Wc([path])
-        wc.execute(context)
-        assert context.state.is_present() is True
-        assert context.state.get() == f'0 0 1 {path}'
-    finally:
-        os.remove(path)
+    lines, words, num_bytes = 0, 0, 1
+    create_file_and_run_test(content, lines, words, num_bytes)
 
 
 def test_with_error():
-    error = 'wc: f: No such file'
-    context = Context(1)
+    error = 'wc: no such file f\n'
+    context = Context()
     wc = Wc(['f'])
-    wc.execute(context)
-    assert context.error.is_present() is True
-    assert context.error.get() == error
+    output, ret_code = wc.execute(context)
+    assert ret_code != 0
+    assert output == error
 
 
 def test_empty_last_line():
     content = 'hello\n'
-    context = Context(1)
-    fd, path = create_tmp_file(content)
-    try:
-        wc = Wc([path])
-        wc.execute(context)
-        assert context.state.is_present() is True
-        assert context.state.get() == f'1 1 6 {path}'
-    finally:
-        os.remove(path)
+    lines, words, num_bytes = 1, 1, 6
+    create_file_and_run_test(content, lines, words, num_bytes)
 
 
 def test_not_empty_last_line():
     content = 'hello\nworld'
-    context = Context(1)
-    fd, path = create_tmp_file(content)
-    try:
-        wc = Wc([path])
-        wc.execute(context)
-        assert context.state.is_present() is True
-        assert context.state.get() == f'1 2 11 {path}'
-    finally:
-        os.remove(path)
+    lines, words, num_bytes = 1, 2, 11
+    create_file_and_run_test(content, lines, words, num_bytes)
 
 
 def test_with_files():
     content = 'hello\nworld'
-    context = Context(1)
+    context = Context()
     fd1, path1 = create_tmp_file(content)
     fd2, path2 = create_tmp_file(content)
     try:
         wc = Wc([path1, path2])
-        wc.execute(context)
-        assert context.state.is_present() is True
-        assert context.state.get() == f'1 2 11 {path1}\n1 2 11 {path2}'
+        output, ret_code = wc.execute(context)
+        assert ret_code == 0
+        assert output == f'1 2 11 {path1}\n1 2 11 {path2}\n'
     finally:
         os.remove(path1)
         os.remove(path2)
