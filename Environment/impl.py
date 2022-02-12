@@ -9,7 +9,7 @@ class Environment:
 
     def __init__(self, vars=None):
         if vars is None:
-            vars = {'': "$", "x": "3"}
+            vars = {'': "$"}
         self.vars = vars
 
     def add_var(self, *, name, value) -> NoReturn:
