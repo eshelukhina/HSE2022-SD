@@ -1,7 +1,7 @@
 from typing import List
 
 from Executor.context import Context
-from Environment.impl import Environment
+from Environment.impl import environment
 
 
 class Executor:
@@ -11,7 +11,7 @@ class Executor:
 
     def __init__(self):
         self.commands = []
-        self.env = Environment()
+        self.env = environment
 
     is_shell_terminated = False
 
@@ -29,7 +29,7 @@ class Executor:
         if not self.commands:
             return '', 0
 
-        context = Context(env=self.env)
+        context = Context()
         output, ret_code = None, None
         for command in self.commands:
             output, ret_code = command.execute(context)

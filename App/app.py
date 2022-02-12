@@ -2,6 +2,7 @@ import sys
 
 from App.io import IO
 from Executor.executor import Executor
+from Substitution.substitution import Substitution
 from parser.impl import Parser
 
 
@@ -13,6 +14,7 @@ class App:
     def __init__(self):
         self.parser = Parser()
         self.executor = Executor()
+        self.substitution = Substitution()
 
     def run(self):
         """
@@ -29,7 +31,8 @@ class App:
                     print('')
                     sys.exit(0)
             try:
-                commands = self.parser.parse(input_data=user_input)
+                subst_user_input = self.substitution.substitute(user_input)
+                commands = self.parser.parse(input_data=subst_user_input)
             except ValueError as v_err:
                 IO.write(str(v_err))
                 continue
