@@ -97,6 +97,11 @@ class Substitution:
         return res, i
 
     def substitute(self, input_str: str):
+        """
+        Gets an input string
+        Performs variable substitution and quotes
+        :returns str - string with performed substitutions
+        """
         if input_str.find(self.SINGLE_QUOTE) == -1 and input_str.find(self.DOUBLE_QUOTE) == -1:
             return self.find_and_replace(input_str)
         else:
