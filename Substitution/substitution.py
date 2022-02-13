@@ -99,7 +99,7 @@ class Substitution:
                 else:
                     res = self.__find_and_replace(sub_s)
             else:
-                raise Exception
+                raise Exception("Invalid number of quotes")
             return res, i - 1
         elif s[i] == quote:
             sub_s = s[i_start:i + 1]
@@ -108,5 +108,5 @@ class Substitution:
             else:
                 res = self.__find_and_replace(sub_s)
         else:
-            raise Exception
+            raise Exception("Invalid number of quotes")
         return res, i
