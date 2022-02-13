@@ -34,7 +34,7 @@ class Substitution:
             i += 1
         return var, i
 
-    def __set_substitutions(self, s: str):
+    def __set_substitutions(self, s: str) -> str:
         diff = 0
         for elem in self.list_of_substitutions:
             var, positions = elem
@@ -49,7 +49,7 @@ class Substitution:
             s = a + new_value + b
         return s
 
-    def __find_and_replace(self, s: str):
+    def __find_and_replace(self, s: str) -> str:
         self.__get_substitutions(s)
         s = self.__set_substitutions(s)
         self.list_of_substitutions.clear()
@@ -86,7 +86,7 @@ class Substitution:
             i += 1
         return result
 
-    def __extract_quotes(self, quote: str, i: int, s: str):
+    def __extract_quotes(self, quote: str, i: int, s: str) -> Tuple[str, int]:
         i_start = i
         i += 1
         while i < len(s) and s[i] != quote:
