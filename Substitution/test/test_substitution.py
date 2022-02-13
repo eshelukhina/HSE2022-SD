@@ -95,3 +95,16 @@ def test_multiple_subst_in_double_quotes_2():
     input_str = '"$x $y"'
     assert subst.substitute(input_str) == '"3 4"'
 
+
+def test_1():
+    subst = Substitution()
+    input_str = "\" hello' \""
+    assert subst.substitute(input_str) == "\" hello' \""
+
+
+def test_2():
+    subst = Substitution()
+    subst.env.add_var(name="x", value="3")
+    input_str = "\"'$x\"\""
+    assert subst.substitute(input_str) == "\"'3\"\""
+

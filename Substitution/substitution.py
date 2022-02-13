@@ -93,7 +93,7 @@ class Substitution:
                 else:
                     res = self.find_and_replace(sub_s)
             else:
-                raise Exception("1")
+                raise IOError
             return res, i - 1
         elif s[i] == quote:
             sub_s = s[i_start:i + 1]
@@ -102,7 +102,7 @@ class Substitution:
             else:
                 res = self.find_and_replace(sub_s)
         else:
-            raise Exception("2")
+            raise IOError
         return res, i
 
     def substitute(self, input_str: str):
