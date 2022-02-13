@@ -33,11 +33,8 @@ class App:
                     print('')
                     sys.exit(0)
             try:
-                try:
-                    subst_user_input = self.substitution.substitute(user_input)
-                    commands = self.parser.parse(input_data=subst_user_input)
-                except IOError:
-                    print("Invalid input, please try again")
+                subst_user_input = self.substitution.substitute(user_input)
+                commands = self.parser.parse(input_data=subst_user_input)
             except ValueError as v_err:
                 IO.write(Optional.of(v_err))
                 continue
