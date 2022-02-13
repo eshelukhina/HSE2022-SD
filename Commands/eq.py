@@ -12,14 +12,14 @@ class Eq:
         self.src = src
         self.dest = dest
 
-    def execute(self, context: Context) -> Tuple[str, int]:
+    def execute(self, context: Context) -> int:
         """
         Updates value of environment variable
-        :returns: Tuple of command result and status code
-        :rtype: Tuple[str, int]
+        :returns: Status code
+        :rtype: int
         """
         context.env.add_var(name=self.dest, value=self.src)
-        return '\n', 0
+        return 0
 
     def __str__(self):
         return f'{self.dest} EQ {self.src}'

@@ -1,5 +1,7 @@
 from typing import List, Tuple
 
+from optional import Optional
+
 from Executor.context import Context
 
 
@@ -14,14 +16,15 @@ class Echo:
         """
         self.args = args
 
-    def execute(self, context: Context) -> Tuple[str, int]:
+    def execute(self, context: Context) -> int:
         """
         Return command arguments
-        :returns: Tuple of command result and status code
-        :rtype: Tuple[str, int]
+        :returns: Status code
+        :rtype: int
         """
-        result = " ".join(self.args) + '\n'
-        return result, 0
+        result = " ".join(self.args)
+        context.state = Optional.of(result)
+        return 0
 
     def __str__(self):
         return f'ECHO {self.args}'

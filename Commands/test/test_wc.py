@@ -17,9 +17,9 @@ def create_file_and_run_test(content, lines, words, num_bytes):
     fd, path = create_tmp_file(content)
     try:
         wc = Wc([path])
-        output, ret_code = wc.execute(context)
+        ret_code = wc.execute(context)
         assert ret_code == 0
-        assert output == f'{lines} {words} {num_bytes} {path}\n'
+        assert context.state.get() == f'{lines} {words} {num_bytes} {path}'
     finally:
         os.remove(path)
 
@@ -37,12 +37,12 @@ def test_not_empty_file():
 
 
 def test_with_error():
-    error = 'wc: no such file f\n'
+    error = 'wc: no such file f'
     context = Context()
     wc = Wc(['f'])
-    output, ret_code = wc.execute(context)
+    ret_code = wc.execute(context)
     assert ret_code != 0
-    assert output == error
+    assert context.state.get() == error
 
 
 def test_empty_last_line():
@@ -64,9 +64,9 @@ def test_with_files():
     fd2, path2 = create_tmp_file(content)
     try:
         wc = Wc([path1, path2])
-        output, ret_code = wc.execute(context)
+        ret_code = wc.execute(context)
         assert ret_code == 0
-        assert output == f'1 2 11 {path1}\n1 2 11 {path2}\n'
+        assert context.state.get() == f'1 2 11 {path1}\n1 2 11 {path2}'
     finally:
         os.remove(path1)
         os.remove(path2)

@@ -1,4 +1,4 @@
-from typing import Tuple
+from optional import Optional
 
 from Executor.context import Context
 from Executor.file_manager import FileManager
@@ -15,20 +15,26 @@ class Cat:
         """
         self.args = args
 
-    def execute(self, context: Context) -> Tuple[str, int]:
+    def execute(self, context: Context) -> int:
         """
         Check that arguments are paths to existing files.
         Return the contents of these files
-        :returns: Tuple of command result and status code
-        :rtype: Tuple[str, int]
+        :returns: Status code
+        :rtype: int
         """
         for arg in self.args:
             if not FileManager.is_file(arg):
-                return f'cat: no such file {arg}\n', 2
-        result = ''
-        for arg in self.args:
-            result += FileManager.get_file_content(arg)
-        return result, 0
+                context.state = Optional.of(f'cat: no such file {arg}')
+                return 2
+        if len(self.args) > 0:
+            result = ''.join([FileManager.get_file_content(arg) for arg in self.args])
+        else:
+            if context.state.is_empty():
+                context.state = Optional.of("wc: empty input")
+                return 1
+            result = ''.join(context.state.get())
+        context.state = Optional.of(result)
+        return 0
 
     def __str__(self):
         return f'CAT {self.args}'

@@ -1,5 +1,6 @@
 import subprocess
-from typing import Tuple
+
+from optional import Optional
 
 from Executor.context import Context
 
@@ -14,21 +15,29 @@ class Process:
         self.name = name
         self.args = args
 
-    def execute(self, context: Context) -> Tuple[str, int]:
+    def execute(self, context: Context) -> int:
         """
         Execute external program.
-        :returns: Tuple of command result and status code
-        :rtype: Tuple[str, int]
+        :returns: Status code
+        :rtype: int
         """
-        command = ' '.join([self.name] + self.args)
+        if len(self.args) > 0:
+            args = self.args
+        else:
+            if context.state.is_empty():
+                context.state = Optional.of("wc: empty input")
+                return 1
+            args = context.state.get()
+        command = ' '.join([self.name] + args)
         result = subprocess.run(
             command, shell=True, capture_output=True, text=True, env=context.env.get_vars()
         )
 
         if result.returncode != 0:
-            return result.stderr, result.returncode
-
-        return result.stdout, result.returncode
+            context.state = Optional.of(result.stderr)
+            return result.returncode
+        context.state = Optional.of(result.stdout)
+        return result.returncode
 
     def __str__(self):
         return f'Process name: {self.name}, args: {self.args}'

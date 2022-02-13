@@ -5,10 +5,10 @@ from Executor.context import Context
 
 
 def test_cur_dir():
-    args = ['']
-    result = os.getcwd() + '\n'
+    args = []
+    result = os.getcwd()
     pwd = Pwd(args=args)
     context = Context()
-    output, ret_code = pwd.execute(context)
+    ret_code = pwd.execute(context)
     assert ret_code == 0
-    assert output == result
+    assert context.state.get() == result
