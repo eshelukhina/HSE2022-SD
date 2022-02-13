@@ -55,7 +55,13 @@ class Substitution:
         self.list_of_substitutions.clear()
         return s
 
-    def substitute_quotes(self, s: str) -> str:
+    def substitute(self, s: str) -> str:
+        """
+        Gets an input string
+        Performs variable substitution and quotes
+        :returns str - string with performed substitutions
+        """
+
         i = 0
         result = ""
         while i < len(s):
@@ -104,21 +110,3 @@ class Substitution:
         else:
             raise IOError
         return res, i
-
-    def substitute(self, input_str: str):
-        """
-        Gets an input string
-        Performs variable substitution and quotes
-        :returns str - string with performed substitutions
-        """
-        if input_str.find(self.SINGLE_QUOTE) == -1 and input_str.find(self.DOUBLE_QUOTE) == -1:
-            return self.find_and_replace(input_str)
-        else:
-            return self.substitute_quotes(input_str)
-
-
-if __name__ == '__main__':
-    a = Substitution()
-    a.env.add_var(name="xy", value="3")
-    inp = "echo \"\"$xy\"\""
-    print(a.substitute(inp))
