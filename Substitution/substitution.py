@@ -67,6 +67,14 @@ class Substitution:
                 new_substr, new_i = self.extract_quotes(self.DOUBLE_QUOTE, i, s)
                 i = new_i
                 result += new_substr
+            elif s[i] == self.DOLLAR:
+                substr = s[i]
+                i += 1
+                while i < len(s) and s[i].isalpha():
+                    substr += s[i]
+                    i += 1
+                result += self.find_and_replace(substr)
+                i -= 1
             else:
                 result += s[i]
             i += 1
@@ -86,6 +94,7 @@ class Substitution:
                     res = self.find_and_replace(sub_s)
             else:
                 raise Exception("1")
+            return res, i - 1
         elif s[i] == quote:
             sub_s = s[i_start:i + 1]
             if quote == self.SINGLE_QUOTE:
@@ -107,8 +116,9 @@ class Substitution:
         else:
             return self.substitute_quotes(input_str)
 
-#
-# if __name__ == '__main__':
-#     a = Substitution()
-#     inp = "echo '\"'$x'\"'"
-#     print(a.substitute(inp))
+
+if __name__ == '__main__':
+    a = Substitution()
+    a.env.add_var(name="xy", value="3")
+    inp = "echo \"\"$xy\"\""
+    print(a.substitute(inp))
