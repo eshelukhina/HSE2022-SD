@@ -1,5 +1,7 @@
 import sys
 
+from optional import Optional
+
 from App.io import IO
 from Executor.executor import Executor
 from Substitution.substitution import Substitution
@@ -37,7 +39,7 @@ class App:
                 except IOError:
                     print("Invalid input, please try again")
             except ValueError as v_err:
-                IO.write(str(v_err))
+                IO.write(Optional.of(v_err))
                 continue
 
             self.executor.set_commands(commands)
