@@ -1,5 +1,7 @@
 from typing import List
 
+from optional import Optional
+
 from Executor.context import Context
 from Environment.impl import environment
 
@@ -27,12 +29,11 @@ class Executor:
         Executes the sequence of commands
         """
         if not self.commands:
-            return '', 0
+            return Optional.of(''), 0
 
         context = Context()
         output, ret_code = None, None
         for command in self.commands:
-            Executor.is_shell_terminated = False
             ret_code = command.execute(context)
             if ret_code != 0:
                 return context.state, ret_code

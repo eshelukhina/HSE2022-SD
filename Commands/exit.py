@@ -16,7 +16,7 @@ class Exit:
         :param args: command arguments
         """
         self.args = args
-        self.output = "Shell is terminated"
+        self.output = ""
 
     def execute(self, context: Context) -> int:
         """

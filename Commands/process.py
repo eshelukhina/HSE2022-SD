@@ -24,10 +24,8 @@ class Process:
         if len(self.args) > 0:
             args = self.args
         else:
-            if context.state.is_empty():
-                context.state = Optional.of("wc: empty input")
-                return 1
-            args = context.state.get()
+            args = [] if context.state.is_empty() else [context.state.get()]
+
         command = ' '.join([self.name] + args)
         result = subprocess.run(
             command, shell=True, capture_output=True, text=True, env=context.env.get_vars()

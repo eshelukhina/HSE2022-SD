@@ -30,7 +30,7 @@ class Cat:
             result = ''.join([FileManager.get_file_content(arg) for arg in self.args])
         else:
             if context.state.is_empty():
-                context.state = Optional.of("wc: empty input")
+                context.state = Optional.of("cat: empty input")
                 return 1
             result = ''.join(context.state.get())
         context.state = Optional.of(result)

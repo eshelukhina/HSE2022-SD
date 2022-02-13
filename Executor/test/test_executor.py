@@ -8,7 +8,7 @@ def test_no_commands():
     executor.set_commands([])
     output, ret_code = executor.run()
     assert ret_code == 0
-    assert output == ""
+    assert output.get() == ""
 
 
 def test_one_command():
@@ -18,7 +18,7 @@ def test_one_command():
     executor.set_commands([command])
     output, ret_code = executor.run()
     assert ret_code == 0
-    assert output == args[0] + '\n'
+    assert output.get() == args[0]
 
 
 def test_exit():
@@ -27,5 +27,5 @@ def test_exit():
     executor.set_commands([command])
     output, ret_code = executor.run()
     assert ret_code == 0
-    assert output == command.output
+    assert output.get() == command.output
     assert executor.is_shell_terminated

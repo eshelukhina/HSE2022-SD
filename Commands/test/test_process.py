@@ -1,5 +1,5 @@
 from Commands.process import Process
-from Environment.impl import Environment
+from Environment.impl import environment
 from Executor.context import Context
 
 
@@ -13,7 +13,9 @@ def test_print():
 
 def test_env():
     process = Process(name='echo', args=["$x"])
-    context = Context(env=Environment({'x': 'Hello World!'}))
+    environment.add_var(name='x', value='Hello World!')
+
+    context = Context()
     ret_code = process.execute(context)
     assert context.state.get() == "Hello World!\n"
     assert ret_code == 0
@@ -21,6 +23,6 @@ def test_env():
 
 def test_process_with_error():
     process = Process(name='ca', args=[])
-    context = Context(env=Environment({}))
+    context = Context()
     ret_code = process.execute(context)
     assert ret_code != 0

@@ -39,7 +39,7 @@ def test_not_empty_file():
 
 
 def test_with_error():
-    error = 'cat: no such file f\n'
+    error = 'cat: no such file f'
     context = Context()
     cat = Cat(['f'])
     ret_code = cat.execute(context)
