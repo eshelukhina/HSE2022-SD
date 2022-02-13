@@ -96,13 +96,13 @@ def test_multiple_subst_in_double_quotes_2():
     assert subst.substitute(input_str) == '"3 4"'
 
 
-def test_1():
+def test_one_single_in_double_quotes_right():
     subst = Substitution()
     input_str = "\" hello' \""
     assert subst.substitute(input_str) == "\" hello' \""
 
 
-def test_2():
+def test_one_single_in_double_quotes():
     subst = Substitution()
     subst.env.add_var(name="x", value="3")
     input_str = "\"'$x\"\""
