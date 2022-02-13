@@ -20,8 +20,8 @@ class Exit:
 
     def execute(self, context: Context) -> int:
         """
-        Terminate the current shell
-        :returns: Tuple of command result and status code
+        Terminate the current shell if executed as a single command or at the end of a pipe
+        :returns: Status code
         :rtype: int
         """
         Executor.is_shell_terminated = True

@@ -19,9 +19,9 @@ class Wc:
 
     def execute(self, context: Context) -> int:
         """
-        Check that all arguments are paths to existing files.
-        Retrieves the contents of these files and return count the number of lines, words, and bytes for each.
-        :returns: Tuple of command result and status code
+        Print number of lines, words, and bytes for each FILE in args.
+        For pipe read previous command output
+        :returns: Status code
         :rtype: int
         """
         if len(self.args) > 0:
@@ -33,6 +33,9 @@ class Wc:
         if len(self.args) > 0:
             args = zip([FileManager.get_file_content(arg) for arg in self.args], self.args)
         else:
+            if context.state.is_empty():
+                context.state = Optional.of("wc: empty input")
+                return 1
             args = zip([''.join(context.state.get()) + '\n'], [''])
         final_result = []
         for arg, file_name in args:

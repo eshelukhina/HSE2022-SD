@@ -19,7 +19,7 @@ class Cat:
         """
         Check that arguments are paths to existing files.
         Return the contents of these files
-        :returns: Tuple of command result and status code
+        :returns: Status code
         :rtype: int
         """
         for arg in self.args:
@@ -29,6 +29,9 @@ class Cat:
         if len(self.args) > 0:
             result = ''.join([FileManager.get_file_content(arg) for arg in self.args])
         else:
+            if context.state.is_empty():
+                context.state = Optional.of("wc: empty input")
+                return 1
             result = ''.join(context.state.get())
         context.state = Optional.of(result)
         return 0

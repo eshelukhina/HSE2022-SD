@@ -18,10 +18,16 @@ class Process:
     def execute(self, context: Context) -> int:
         """
         Execute external program.
-        :returns: Tuple of command result and status code
+        :returns: Status code
         :rtype: int
         """
-        args = context.state.get() if len(self.args) == 0 else self.args
+        if len(self.args) > 0:
+            args = self.args
+        else:
+            if context.state.is_empty():
+                context.state = Optional.of("wc: empty input")
+                return 1
+            args = context.state.get()
         command = ' '.join([self.name] + args)
         result = subprocess.run(
             command, shell=True, capture_output=True, text=True, env=context.env.get_vars()

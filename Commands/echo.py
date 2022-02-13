@@ -19,7 +19,7 @@ class Echo:
     def execute(self, context: Context) -> int:
         """
         Return command arguments
-        :returns: Tuple of command result and status code
+        :returns: Status code
         :rtype: int
         """
         result = " ".join(self.args)

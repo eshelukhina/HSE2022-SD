@@ -20,7 +20,7 @@ class Pwd:
     def execute(self, context: Context) -> int:
         """
         Return working directory
-        :returns: Tuple of command result and status code
+        :returns: Status code
         :rtype: int
         """
         if len(self.args) > 0 or not context.state.is_empty():
