@@ -16,17 +16,17 @@ class Substitution:
     def __init__(self):
         self.list_of_substitutions = []
 
-    def get_substitutions(self, s: str):
+    def __get_substitutions(self, s: str):
         i = 0
         while i < len(s):
             if s[i] == self.DOLLAR:
                 a = i
-                var, i = self.extract_var(i, s)
+                var, i = self.__extract_var(i, s)
                 self.list_of_substitutions.append((var, (a, i - 1)))
             else:
                 i += 1
 
-    def extract_var(self, i: int, s: str) -> Tuple[str, int]:
+    def __extract_var(self, i: int, s: str) -> Tuple[str, int]:
         var: str = s[i]
         i += 1
         while i < len(s) and s[i].isalpha():
@@ -34,7 +34,7 @@ class Substitution:
             i += 1
         return var, i
 
-    def set_substitutions(self, s: str):
+    def __set_substitutions(self, s: str):
         diff = 0
         for elem in self.list_of_substitutions:
             var, positions = elem
@@ -49,9 +49,9 @@ class Substitution:
             s = a + new_value + b
         return s
 
-    def find_and_replace(self, s: str):
-        self.get_substitutions(s)
-        s = self.set_substitutions(s)
+    def __find_and_replace(self, s: str):
+        self.__get_substitutions(s)
+        s = self.__set_substitutions(s)
         self.list_of_substitutions.clear()
         return s
 
@@ -66,11 +66,11 @@ class Substitution:
         result = ""
         while i < len(s):
             if s[i] == self.SINGLE_QUOTE:
-                new_substr, new_i = self.extract_quotes(self.SINGLE_QUOTE, i, s)
+                new_substr, new_i = self.__extract_quotes(self.SINGLE_QUOTE, i, s)
                 i = new_i
                 result += new_substr
             elif s[i] == self.DOUBLE_QUOTE:
-                new_substr, new_i = self.extract_quotes(self.DOUBLE_QUOTE, i, s)
+                new_substr, new_i = self.__extract_quotes(self.DOUBLE_QUOTE, i, s)
                 i = new_i
                 result += new_substr
             elif s[i] == self.DOLLAR:
@@ -79,14 +79,14 @@ class Substitution:
                 while i < len(s) and s[i].isalpha():
                     substr += s[i]
                     i += 1
-                result += self.find_and_replace(substr)
+                result += self.__find_and_replace(substr)
                 i -= 1
             else:
                 result += s[i]
             i += 1
         return result
 
-    def extract_quotes(self, quote: str, i: int, s: str):
+    def __extract_quotes(self, quote: str, i: int, s: str):
         i_start = i
         i += 1
         while i < len(s) and s[i] != quote:
@@ -97,7 +97,7 @@ class Substitution:
                 if quote == self.SINGLE_QUOTE:
                     res = sub_s
                 else:
-                    res = self.find_and_replace(sub_s)
+                    res = self.__find_and_replace(sub_s)
             else:
                 raise IOError
             return res, i - 1
@@ -106,7 +106,7 @@ class Substitution:
             if quote == self.SINGLE_QUOTE:
                 res = sub_s
             else:
-                res = self.find_and_replace(sub_s)
+                res = self.__find_and_replace(sub_s)
         else:
             raise IOError
         return res, i
