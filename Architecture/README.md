@@ -1,6 +1,6 @@
 # Software Design
 
-![alt text](cliArch.png)
+![cliArch](https://user-images.githubusercontent.com/57727520/153785409-b4d6bdad-4b73-4d0d-9751-8b0d0ca1097a.png)
 
 * **App** – Точка входа в приложение. Использует другие модули для обработки запросов.
 
