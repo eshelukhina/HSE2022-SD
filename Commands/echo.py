@@ -16,15 +16,15 @@ class Echo:
         """
         self.args = args
 
-    def execute(self, context: Context) -> int:
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
         Return command arguments
         :returns: Status code
         :rtype: int
         """
         result = " ".join(self.args)
-        context.state = Optional.of(result)
-        return 0
+        # context.state = Optional.of(result)
+        return result, 0
 
     def __str__(self):
         return f'ECHO {self.args}'

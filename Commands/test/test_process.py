@@ -6,9 +6,9 @@ from Executor.context import Context
 def test_print():
     process = Process(name='echo', args=["Hello World!"])
     context = Context()
-    ret_code = process.execute(context)
+    output, ret_code = process.execute(context)
     assert ret_code == 0
-    assert context.state.get() == "Hello World!\n"
+    assert output == "Hello World!\n"
 
 
 def test_env():
@@ -16,13 +16,13 @@ def test_env():
     environment.add_var(name='x', value='Hello World!')
 
     context = Context()
-    ret_code = process.execute(context)
-    assert context.state.get() == "Hello World!\n"
+    output, ret_code = process.execute(context)
+    assert output == "Hello World!\n"
     assert ret_code == 0
 
 
 def test_process_with_error():
     process = Process(name='ca', args=[])
     context = Context()
-    ret_code = process.execute(context)
+    output, ret_code = process.execute(context)
     assert ret_code != 0

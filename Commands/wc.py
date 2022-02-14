@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from optional import Optional
 
@@ -17,7 +17,7 @@ class Wc:
         """
         self.args = args
 
-    def execute(self, context: Context) -> int:
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
         Print number of lines, words, and bytes for each FILE in args.
         For pipe read previous command output
@@ -27,15 +27,15 @@ class Wc:
         if len(self.args) > 0:
             for arg in self.args:
                 if not FileManager.is_file(arg):
-                    context.state = Optional.of(f'wc: no such file {arg}')
-                    return 2
+                    # context.state = Optional.of(f'wc: no such file {arg}')
+                    return f'wc: no such file {arg}', 2
 
         if len(self.args) > 0:
             args = zip([FileManager.get_file_content(arg) for arg in self.args], self.args)
         else:
             if context.state.is_empty():
-                context.state = Optional.of("wc: empty input")
-                return 1
+                # context.state = Optional.of("wc: empty input")
+                return "wc: empty input", 1
             args = zip([''.join(context.state.get()) + '\n'], [''])
         final_result = []
         for arg, file_name in args:
@@ -54,8 +54,8 @@ class Wc:
 
             result.append(file_name)
             final_result.append(' '.join(result))
-        context.state = Optional.of('\n'.join(final_result))
-        return 0
+        # context.state = Optional.of('\n'.join(final_result))
+        return '\n'.join(final_result), 0
 
     def __str__(self):
         return f'WC {self.args}'

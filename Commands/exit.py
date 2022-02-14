@@ -18,15 +18,15 @@ class Exit:
         self.args = args
         self.output = ""
 
-    def execute(self, context: Context) -> int:
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
         Terminate the current shell if executed as a single command or at the end of a pipe
         :returns: Status code
         :rtype: int
         """
         Executor.is_shell_terminated = True
-        context.state = Optional.of(self.output)
-        return 0
+        # context.state = Optional.of(self.output)
+        return self.output, 0
 
     def __str__(self):
         return f'EXIT {self.args}'

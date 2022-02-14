@@ -34,7 +34,8 @@ class Executor:
         context = Context()
         output, ret_code = None, None
         for command in self.commands:
-            ret_code = command.execute(context)
+            output, ret_code = command.execute(context)
+            context.state = Optional.of(output)
             if ret_code != 0:
                 return context.state, ret_code
         return context.state, ret_code

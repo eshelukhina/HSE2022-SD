@@ -7,8 +7,8 @@ def test_one_arg():
     result = "hello world !"
     echo = Echo(args=args)
     context = Context()
-    ret_code = echo.execute(context)
-    assert context.state.get() == result
+    output, ret_code = echo.execute(context)
+    assert output == result
     assert ret_code == 0
 
 
@@ -16,6 +16,6 @@ def test_several_args():
     args = ["hello", "world", "!"]
     echo = Echo(args=args)
     context = Context()
-    ret_code = echo.execute(context)
+    output, ret_code = echo.execute(context)
     assert ret_code == 0
-    assert context.state.get() == "hello world !"
+    assert output == "hello world !"

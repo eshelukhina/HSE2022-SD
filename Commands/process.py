@@ -1,4 +1,5 @@
 import subprocess
+from typing import Tuple
 
 from optional import Optional
 
@@ -15,7 +16,7 @@ class Process:
         self.name = name
         self.args = args
 
-    def execute(self, context: Context) -> int:
+    def execute(self, context: Context) -> Tuple[str, int]:
         """
         Execute external program.
         :returns: Status code
@@ -32,10 +33,10 @@ class Process:
         )
 
         if result.returncode != 0:
-            context.state = Optional.of(result.stderr)
-            return result.returncode
-        context.state = Optional.of(result.stdout)
-        return result.returncode
+            # context.state = Optional.of(result.stderr)
+            return result.stderr, result.returncode
+        # context.state = Optional.of(result.stdout)
+        return result.stdout, result.returncode
 
     def __str__(self):
         return f'Process name: {self.name}, args: {self.args}'
