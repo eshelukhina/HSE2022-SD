@@ -25,7 +25,6 @@ class Exit:
         :rtype: int
         """
         Executor.is_shell_terminated = True
-        # context.state = Optional.of(self.output)
         return self.output, 0
 
     def __str__(self):

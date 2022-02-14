@@ -26,18 +26,14 @@ class Cat:
         """
         for arg in self.args:
             if not FileManager.is_file(arg):
-                # context.state = Optional.of(f'cat: no such file {arg}')
                 return f'cat: no such file {arg}', 2
         if len(self.args) > 0:
             result = ''.join([FileManager.get_file_content(arg) for arg in self.args])
         else:
             if context.state.is_empty():
-                context.state = Optional.of("cat: empty input")
-                return 1
+                return "cat: empty input", 1
             result = ''.join(context.state.get())
         return result, 0
-        # context.state = Optional.of(result)
-        return 0
 
     def __str__(self):
         return f'CAT {self.args}'

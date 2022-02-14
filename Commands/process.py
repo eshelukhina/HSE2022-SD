@@ -33,9 +33,7 @@ class Process:
         )
 
         if result.returncode != 0:
-            # context.state = Optional.of(result.stderr)
             return result.stderr, result.returncode
-        # context.state = Optional.of(result.stdout)
         return result.stdout, result.returncode
 
     def __str__(self):

@@ -64,7 +64,7 @@ def test_with_files():
     fd2, path2 = create_tmp_file(content)
     try:
         wc = Wc([path1, path2])
-        ret_code = wc.execute(context)
+        output, ret_code = wc.execute(context)
         assert ret_code == 0
         assert output == f'1 2 11 {path1}\n1 2 11 {path2}'
     finally:

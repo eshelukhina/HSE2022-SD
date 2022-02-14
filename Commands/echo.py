@@ -23,7 +23,6 @@ class Echo:
         :rtype: int
         """
         result = " ".join(self.args)
-        # context.state = Optional.of(result)
         return result, 0
 
     def __str__(self):

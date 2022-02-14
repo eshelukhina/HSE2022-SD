@@ -24,10 +24,8 @@ class Pwd:
         :rtype: int
         """
         if len(self.args) > 0 or not context.state.is_empty():
-            # context.state = Optional.of("pwd: too many arguments")
-            return "pwd: too many arguments" , 1
+            return "pwd: too many arguments", 1
         result = FileManager.get_current_directory()
-        # context.state = Optional.of(FileManager.get_current_directory())
         return result, 0
 
     def __str__(self):
