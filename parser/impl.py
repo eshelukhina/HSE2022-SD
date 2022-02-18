@@ -7,6 +7,7 @@ from Commands.pwd import Pwd
 from Commands.wc import Wc
 from Commands.exit import Exit
 from Commands.eq import Eq
+from Commands.grep import Grep
 
 
 # Парсит строку и возвращает очередь из комманд для исполнения
@@ -28,6 +29,8 @@ class Parser:
                 return [Pwd(args=root.children)]
             elif root.value == 'wc':
                 return [Wc(args=root.children)]
+            elif root.value == 'grep':
+                return [Grep(args=root.children)]
             else:
                 return [Process(name=root.value, args=root.children)]
         res = []

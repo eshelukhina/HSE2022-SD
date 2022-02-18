@@ -7,6 +7,7 @@ from Commands.exit import Exit
 from Commands.process import Process
 from Commands.pwd import Pwd
 from Commands.wc import Wc
+from Commands.grep import Grep
 from parser.impl import Parser
 
 
@@ -50,6 +51,14 @@ def test_eq():
         Eq(dest='x', src='Golang'),
         Eq(dest='y', src='200'),
         Eq(dest='z', src='damn')
+    ]
+
+
+def test_grep():
+    parser = Parser()
+    res = parser.parse(input_data="grep -i hello file.txt")
+    assert res == [
+        Grep(args=['-i', 'hello', 'file.txt']),
     ]
 
 
