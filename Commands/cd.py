@@ -1,6 +1,5 @@
 from typing import List, Tuple
 
-import re
 import os
 from os.path import expanduser
 

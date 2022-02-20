@@ -9,6 +9,7 @@ from Commands.exit import Exit
 from Commands.eq import Eq
 from Commands.grep import Grep
 from Commands.cd import Cd
+from Commands.ls import Ls
 
 
 # Парсит строку и возвращает очередь из комманд для исполнения
@@ -34,6 +35,8 @@ class Parser:
                 return [Grep(args=root.children)]
             elif root.value == 'cd':
                 return [Cd(args=root.children)]
+            elif root.value == 'ls':
+                return [Ls(args=root.children)]
             else:
                 return [Process(name=root.value, args=root.children)]
         res = []
