@@ -16,6 +16,11 @@ class ThrowingArgumentParser(argparse.ArgumentParser):
 
 
 def search(*, data: str, pattern: str, ignore_case, file_name: Optional[str], append_number: int):
+    """
+    Search for the given pattern in every line of data according to the command options.
+    :returns: Lines containing the pattern and {append_number} lines after
+    :rtype: str
+    """
     s = set()
     split_data = data.split('\n')
     for i, line in enumerate(split_data):
@@ -34,7 +39,7 @@ def search(*, data: str, pattern: str, ignore_case, file_name: Optional[str], ap
 
 class Grep:
     """
-    TODO написать описание
+    Search the input for lines matching the given pattern and return them
     """
 
     def __init__(self, args: List[str]):
@@ -44,6 +49,10 @@ class Grep:
         self.args = args
 
     def parse_arguments(self, args):
+        """
+        Parse grep options
+        :param args: command args
+        """
         parser = ThrowingArgumentParser()
         parser.add_argument("-w", dest="words", action="store_true", default=False)
         parser.add_argument("-i", dest="case_insensitive", action="store_true", default=False)
@@ -53,7 +62,7 @@ class Grep:
 
     def execute(self, context: Context) -> Tuple[str, int]:
         """
-        TODO написать описание
+        Search for the given pattern in the input
         :returns: Status code
         :rtype: int
         """
