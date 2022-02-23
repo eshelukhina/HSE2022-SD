@@ -36,12 +36,14 @@ class Cd:
             Executor.current_directory = expanduser("~")
             return self.output, 0
         if not self.args[0].startswith(os.path.sep):
-            self.args[0] = os.path.sep + self.args[0]
-        current_directory = Executor.current_directory + self.__remove_suffix(self.args[0], os.path.sep)
+            current_directory = os.path.abspath(Executor.current_directory + os.path.sep +
+                                                self.__remove_suffix(self.args[0], os.path.sep))
+        else:
+            if self.args[0] == os.path.sep:
+                current_directory = os.path.sep
+            else:
+                current_directory = os.path.abspath(self.__remove_suffix(self.args[0], os.path.sep))
         if not os.path.exists(current_directory):
-            if os.path.exists(self.args[0]):
-                Executor.current_directory = self.__remove_suffix(self.args[0], os.path.sep)
-                return self.output, 0
             return f'cd: no such directory {current_directory}', 2
         Executor.current_directory = current_directory
         return self.output, 0
