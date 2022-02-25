@@ -28,7 +28,7 @@ class Process:
         if result.returncode != 0:
             return result.stderr, result.returncode
 
-        return result.stdout, result.returncode
+        return result.stdout if result.stderr == '' else result.stdout + '\n' + result.stderr, result.returncode
 
     def __str__(self):
         return f'Process name: {self.name}, args: {self.args}'
