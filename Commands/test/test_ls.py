@@ -1,3 +1,5 @@
+import os
+
 from Commands.ls import Ls
 from Executor.context import Context
 
@@ -7,8 +9,12 @@ def test_ls_without_args():
     ls = Ls([])
     output, ret_code = ls.execute(context)
     assert ret_code == 0
-    assert output == 'test_ls.py\ntest_process.py\n__init__.py\ntest_pwd.py' \
-                     '\ntest_wc.py\ntest_echo.py\ntest_cat.py\ntest_grep.py'
+    expected = ""
+    ans = [f + "\n" for f in os.listdir() if not f.startswith('.')]
+    for i in range(len(ans) - 1):
+        expected += ans[i]
+    expected += ans[len(ans) - 1].rstrip("\n")
+    assert output == expected
 
 
 def test_ls_with_correct_arg():
