@@ -2,23 +2,22 @@ import os
 
 from Commands.ls import Ls
 from Executor.context import Context
+from Executor.executor import Executor
 
 
 def test_ls_without_args():
     context = Context()
+    Executor.current_directory = os.getcwd()
+    Executor.current_directory = '../resources'
     ls = Ls([])
     output, ret_code = ls.execute(context)
     assert ret_code == 0
-    expected = ""
-    ans = [f + "\n" for f in os.listdir() if not f.startswith('.')]
-    for i in range(len(ans) - 1):
-        expected += ans[i]
-    expected += ans[len(ans) - 1].rstrip("\n")
-    assert output == expected
+    assert output == 'two\none\n1.txt\nfour\n2.txt\n3.txt'
 
 
 def test_ls_with_correct_arg():
     context = Context()
+    Executor.current_directory = os.getcwd()
     ls = Ls(['../resources'])
     output, ret_code = ls.execute(context)
     assert ret_code == 0
