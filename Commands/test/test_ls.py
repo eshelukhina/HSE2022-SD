@@ -33,3 +33,6 @@ def test_ls_no_such_dir():
     output, ret_code = ls.execute(context)
     assert ret_code == 2
     assert output.__contains__('ls: no such directory')
+
+if __name__ == '__main__':
+    print("aa")
