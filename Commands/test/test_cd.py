@@ -70,7 +70,3 @@ def test_cd_no_such_dir():
     assert ret_code == 2
     assert output.__contains__('cd: no such directory')
     Executor.current_directory = prev_directory
-
-if __name__ == '__main__':
-    # fd, path = create_tmp_file(' ')
-    print("aa")

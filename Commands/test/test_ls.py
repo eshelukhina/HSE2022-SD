@@ -11,8 +11,13 @@ def test_ls_without_args():
     Executor.current_directory = '../resources'
     ls = Ls([])
     output, ret_code = ls.execute(context)
+    actual_output_list = output.split('\n')
+    expected_output_list = ['two', 'one', '1.txt', '2.txt', '3.txt']
+
     assert ret_code == 0
-    assert output == 'two\none\n1.txt\nfour\n2.txt\n3.txt'
+    assert len(expected_output_list) == len(actual_output_list)
+    for file in actual_output_list:
+        assert expected_output_list.__contains__(file)
 
 
 def test_ls_with_correct_arg():
@@ -20,8 +25,13 @@ def test_ls_with_correct_arg():
     Executor.current_directory = os.getcwd()
     ls = Ls(['../resources'])
     output, ret_code = ls.execute(context)
+    actual_output_list = output.split('\n')
+    expected_output_list = ['two', 'one', '1.txt', '2.txt', '3.txt']
+
     assert ret_code == 0
-    assert output == 'two\none\n1.txt\nfour\n2.txt\n3.txt'
+    assert len(expected_output_list) == len(actual_output_list)
+    for file in actual_output_list:
+        assert expected_output_list.__contains__(file)
 
 
 def test_ls_with_many_args():
@@ -38,6 +48,3 @@ def test_ls_no_such_dir():
     output, ret_code = ls.execute(context)
     assert ret_code == 2
     assert output.__contains__('ls: no such directory')
-
-if __name__ == '__main__':
-    print("aa")
