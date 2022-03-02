@@ -1,18 +1,23 @@
+import os
+
 from Commands.ls import Ls
 from Executor.context import Context
+from Executor.executor import Executor
 
 
 def test_ls_without_args():
     context = Context()
+    Executor.current_directory = os.getcwd()
+    Executor.current_directory = '../resources'
     ls = Ls([])
     output, ret_code = ls.execute(context)
     assert ret_code == 0
-    assert output == 'test_ls.py\ntest_process.py\n__init__.py\ntest_pwd.py' \
-                     '\ntest_wc.py\ntest_echo.py\ntest_cat.py\ntest_grep.py'
+    assert output == 'two\none\n1.txt\nfour\n2.txt\n3.txt'
 
 
 def test_ls_with_correct_arg():
     context = Context()
+    Executor.current_directory = os.getcwd()
     ls = Ls(['../resources'])
     output, ret_code = ls.execute(context)
     assert ret_code == 0
