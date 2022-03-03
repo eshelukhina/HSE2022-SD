@@ -32,7 +32,7 @@ def test_ls_without_args():
                                 'venv']
     actual_output_list = output.split('\n')
     assert ret_code == 0
-    assert len(expected_output_list) == len(actual_output_list)
+    assert len(expected_output_list) >= len(actual_output_list)
     for file in actual_output_list:
         assert expected_output_list.__contains__(file)
 
