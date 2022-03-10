@@ -48,7 +48,8 @@ class Grep:
         """
         self.args = args
 
-    def parse_arguments(self, args):
+    @staticmethod
+    def parse_arguments(args):
         """
         Parse grep options
         :param args: command args
@@ -67,9 +68,9 @@ class Grep:
         :rtype: int
         """
         try:
-            result_of_parsing, files = self.parse_arguments(self.args)
-        except (ArgumentParserError, ThrowingArgumentParser, argparse.ArgumentError) as e:
-            return e.__str__(), 1
+            result_of_parsing, files = Grep.parse_arguments(self.args)
+        except ArgumentParserError as e:
+            return "grep: " + e.__str__(), 1
         ignore_case = 0
         pattern = result_of_parsing.pattern
         if result_of_parsing.case_insensitive:
