@@ -24,10 +24,11 @@ class Process:
         :returns: Status code
         :rtype: int
         """
-        if len(self.args) > 0:
-            args = self.args
+        args = self.args
+        if context.state:
+            inp = context.state.get()
         else:
-            args = [] if context.state.is_empty() else [context.state.get()]
+            inp = None
 
         command = ' '.join([self.name] + args)
         env = os.environ.copy()
@@ -35,7 +36,7 @@ class Process:
         if os.name == 'nt':
             env.pop('')
         result = subprocess.run(
-            command, shell=True, capture_output=True, text=True, env=env
+            command, shell=True, input=inp, capture_output=True, text=True, env=env
         )
 
         if result.returncode != 0:
