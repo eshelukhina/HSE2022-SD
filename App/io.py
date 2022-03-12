@@ -1,6 +1,7 @@
 from optional import Optional
 
 
+
 class IO:
     """
     Component responsible for communication with the outside world.

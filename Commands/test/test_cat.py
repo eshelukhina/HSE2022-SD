@@ -43,6 +43,7 @@ def test_with_error():
     context = Context()
     cat = Cat(['f'])
     output, ret_code = cat.execute(context)
+    
     assert ret_code == 2
     assert output == error
 

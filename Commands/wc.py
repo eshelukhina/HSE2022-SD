@@ -54,6 +54,7 @@ class Wc:
             final_result.append(' '.join(result))
         return '\n'.join(final_result), 0
 
+
     def __str__(self):
         return f'WC {self.args}'
 

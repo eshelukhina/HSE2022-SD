@@ -37,4 +37,3 @@ class Environment:
 
 
 environment = Environment()
-

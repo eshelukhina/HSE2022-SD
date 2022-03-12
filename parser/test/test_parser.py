@@ -35,8 +35,7 @@ def test_basic():
 def test_pipe():
     parser = Parser()
     res = parser.parse("echo \"42\" | wc | pwd | exit")
-    for elem in res:
-        print(elem)
+
     assert res == [
         Echo(args=['42']),
         Wc(args=[]),
