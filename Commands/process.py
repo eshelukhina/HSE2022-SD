@@ -1,3 +1,4 @@
+import os
 import subprocess
 from typing import Tuple
 
@@ -21,10 +22,11 @@ class Process:
         :rtype: Tuple[str, int]
         """
         command = ' '.join([self.name] + self.args)
+        env = os.environ.copy()
+        env.update(context.env.get_vars())
         result = subprocess.run(
-            command, shell=True, capture_output=True, text=True, env=context.env.get_vars()
+            command, shell=True, capture_output=True, text=True, env=env
         )
-
         if result.returncode != 0:
             return result.stderr, result.returncode
 
