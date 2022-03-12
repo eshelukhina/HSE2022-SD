@@ -35,7 +35,6 @@ class Process:
         if result.returncode != 0:
             return result.stderr[:-1], result.returncode
         return result.stdout, result.returncode
-
     def __str__(self):
         return f'Process name: {self.name}, args: {self.args}'
 

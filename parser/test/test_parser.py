@@ -48,8 +48,6 @@ def test_pipe():
 def test_eq():
     parser = Parser()
     res = parser.parse("x=\"Golang\" | y = 200 | z= 'damn'")
-    for elem in res:
-        print(elem)
     assert res == [
         Eq(dest='x', src='Golang'),
         Eq(dest='y', src='200'),
@@ -77,5 +75,3 @@ def test_fail_single_quotes():
     parser = Parser()
     with pytest.raises(ParserException) as e:
         parser.parse("cat \"")
-
-
