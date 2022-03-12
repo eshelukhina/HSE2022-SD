@@ -1,12 +1,12 @@
-## Usage
+## Usage 
 ```
-# install the required packages
-pip install -r requirements.txt
+# install the required packages (python >= 3.10 required)
+python3 -m pip install -r requirements.txt
 
 # run CLI app 
-python main.py
+python3 -m main.py
 
 # run tests
-pytest
+python3 -m pytest
 ```
 Описание архитектуры находится в папке Architecture.
