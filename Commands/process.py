@@ -32,6 +32,8 @@ class Process:
         command = ' '.join([self.name] + args)
         env = os.environ.copy()
         env.update(context.env.get_vars())
+        if os.name == 'nt':
+            env.pop('')
         result = subprocess.run(
             command, shell=True, capture_output=True, text=True, env=env
         )
