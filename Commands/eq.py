@@ -1,4 +1,5 @@
 from typing import Tuple
+from optional import Optional
 
 from Executor.context import Context
 
@@ -11,7 +12,7 @@ class Eq:
     def __init__(self, src, dest):
         self.src = src
         self.dest = dest
-        self.output = ""
+        self.output = None
 
     def execute(self, context: Context) -> Tuple[str, int]:
         """

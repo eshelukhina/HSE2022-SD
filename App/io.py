@@ -23,5 +23,5 @@ class IO:
         Print output
         :param output
         """
-        if not output.is_empty():
-            print(output.get(), end='\n')
+        if output:
+            print(output.get())

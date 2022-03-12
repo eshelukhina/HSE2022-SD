@@ -4,8 +4,8 @@ from optional import Optional
 
 from App.io import IO
 from Executor.executor import Executor
-from Substitution.substitution import Substitution
-from parser.impl import Parser
+from parser.substitution import Substitution
+from parser.parser import Parser
 
 
 class App:
@@ -28,13 +28,13 @@ class App:
                 try:
                     user_input = IO.read()
                 except KeyboardInterrupt:
-                    print('')
+                    IO.write(Optional.of(''))
                 except EOFError:
-                    print('')
+                    IO.write(Optional.of(''))
                     sys.exit(0)
             try:
                 subst_user_input = self.substitution.substitute(user_input)
-                commands = self.parser.parse(input_data=subst_user_input)
+                commands = self.parser.parse(input=subst_user_input)
             except Exception as v_err:
                 IO.write(Optional.of(v_err))
                 continue

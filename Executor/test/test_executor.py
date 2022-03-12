@@ -10,7 +10,7 @@ def test_no_commands():
     executor.set_commands([])
     output, ret_code = executor.run()
     assert ret_code == 0
-    assert output.get() == ""
+    assert not output
 
 
 def test_one_command():

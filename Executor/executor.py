@@ -29,8 +29,7 @@ class Executor:
         Executes the sequence of commands
         """
         if not self.commands:
-            return Optional.of(''), 0
-
+            return Optional.empty(), 0
         context = Context()
         output, ret_code = None, None
         for command in self.commands:

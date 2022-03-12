@@ -1,4 +1,4 @@
-from Substitution.substitution import Substitution
+from parser.substitution import Substitution
 
 
 def test_empty_dollar():
