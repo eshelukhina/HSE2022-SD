@@ -1,3 +1,5 @@
+import os
+
 import subprocess
 from typing import Tuple
 
@@ -28,13 +30,16 @@ class Process:
             args = [] if context.state.is_empty() else [context.state.get()]
 
         command = ' '.join([self.name] + args)
+        env = os.environ.copy()
+        env.update(context.env.get_vars())
         result = subprocess.run(
-            command, shell=True, capture_output=True, text=True, env=context.env.get_vars()
+            command, shell=True, capture_output=True, text=True, env=env
         )
 
         if result.returncode != 0:
             return result.stderr[:-1], result.returncode
         return result.stdout, result.returncode
+
     def __str__(self):
         return f'Process name: {self.name}, args: {self.args}'
 

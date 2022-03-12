@@ -1,3 +1,5 @@
+import os
+
 from Commands.process import Process
 from Environment.impl import environment
 from Executor.context import Context
@@ -12,6 +14,8 @@ def test_print():
 
 
 def test_env():
+    if os.name == 'nt':
+        return
     process = Process(name='echo', args=["$x"])
     environment.add_var(name='x', value='Hello World!')
 
