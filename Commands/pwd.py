@@ -1,4 +1,6 @@
-from typing import List, Tuple
+from typing import List, Tuple, Any
+
+from optional import Optional
 
 from Executor.context import Context
 from Executor.file_manager import FileManager
@@ -15,13 +17,17 @@ class Pwd:
         """
         self.args = args
 
-    def execute(self, context: Context) -> Tuple[str, int]:
+
+    def execute(self, context: Context) -> Tuple[Any, int]:
         """
         Return working directory
-        :returns: Tuple of command result and status code
-        :rtype: Tuple[str, int]
+        :returns: Status code
+        :rtype: int
         """
-        return FileManager.get_current_directory() + '\n', 0
+        if len(self.args) > 0 or not context.state.is_empty():
+            return "pwd: too many arguments", 1
+        result = FileManager.get_current_directory()
+        return result, 0
 
     def __str__(self):
         return f'PWD {self.args}'

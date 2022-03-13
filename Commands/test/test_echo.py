@@ -4,7 +4,7 @@ from Executor.context import Context
 
 def test_one_arg():
     args = ["hello world !"]
-    result = "hello world !\n"
+    result = "hello world !"
     echo = Echo(args=args)
     context = Context()
     output, ret_code = echo.execute(context)
@@ -18,4 +18,4 @@ def test_several_args():
     context = Context()
     output, ret_code = echo.execute(context)
     assert ret_code == 0
-    assert output == "hello world !\n"
+    assert output == "hello world !"

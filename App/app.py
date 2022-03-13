@@ -1,8 +1,12 @@
 import sys
 
+
+from optional import Optional
+
 from App.io import IO
 from Executor.executor import Executor
-from parser.impl import Parser
+from parser.substitution import Substitution
+from parser.parser import Parser
 
 
 class App:
@@ -13,7 +17,7 @@ class App:
     def __init__(self):
         self.parser = Parser()
         self.executor = Executor()
-
+        self.substitution = Substitution()
     def run(self):
         """
         Run shell emulator
@@ -24,14 +28,15 @@ class App:
                 try:
                     user_input = IO.read()
                 except KeyboardInterrupt:
-                    print('')
+                    IO.write(Optional.of(''))
                 except EOFError:
-                    print('')
+                    IO.write(Optional.of(''))
                     sys.exit(0)
             try:
-                commands = self.parser.parse(input_data=user_input)
-            except ValueError as v_err:
-                IO.write(str(v_err))
+                subst_user_input = self.substitution.substitute(user_input)
+                commands = self.parser.parse(input=subst_user_input)
+            except Exception as v_err:
+                IO.write(Optional.of(v_err))
                 continue
 
             self.executor.set_commands(commands)

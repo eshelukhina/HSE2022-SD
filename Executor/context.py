@@ -1,6 +1,7 @@
 from optional import Optional
 
-from Environment.impl import Environment
+
+from Environment.impl import environment
 
 
 class Context:
@@ -8,6 +9,6 @@ class Context:
     Stores the execution context of the commands.
     """
 
-    def __init__(self, *, env: Environment = Environment()):
+    def __init__(self):
         self.state = Optional.empty()
-        self.env = env
+        self.env = environment

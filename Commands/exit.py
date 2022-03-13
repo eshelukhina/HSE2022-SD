@@ -1,5 +1,7 @@
 from typing import List, Tuple
 
+from optional import Optional
+
 from Executor.context import Context
 from Executor.executor import Executor
 
@@ -14,13 +16,13 @@ class Exit:
         :param args: command arguments
         """
         self.args = args
-        self.output = "Shell is terminated\n"
+        self.output = ""
 
     def execute(self, context: Context) -> Tuple[str, int]:
         """
-        Terminate the current shell
-        :returns: Tuple of command result and status code
-        :rtype: Tuple[str, int]
+        Terminate the current shell if executed as a single command or at the end of a pipe
+        :returns: Status code
+        :rtype: int
         """
         Executor.is_shell_terminated = True
         return self.output, 0
