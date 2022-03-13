@@ -18,6 +18,7 @@ class App:
         self.parser = Parser()
         self.executor = Executor()
         self.substitution = Substitution()
+        
     def run(self):
         """
         Run shell emulator
