@@ -1,12 +1,12 @@
 ## Usage 
 ```
-# install the required packages (python >= 3.10 required)
-python3 -m pip install -r requirements.txt
+# install the required packages
+pip install -r requirements.txt
 
 # run CLI app 
-python3 -m main.py
+python main.py
 
 # run tests
-python3 -m pytest
+pytest
 ```
 Описание архитектуры находится в папке Architecture.

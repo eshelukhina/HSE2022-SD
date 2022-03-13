@@ -9,7 +9,6 @@ from parser.substitution import Substitution
 from parser.parser import Parser
 
 
-
 class App:
     """
     Shell emulator.
@@ -19,7 +18,7 @@ class App:
         self.parser = Parser()
         self.executor = Executor()
         self.substitution = Substitution()
-
+        
     def run(self):
         """
         Run shell emulator
@@ -39,7 +38,6 @@ class App:
                 commands = self.parser.parse(input=subst_user_input)
             except Exception as v_err:
                 IO.write(Optional.of(v_err))
-
                 continue
 
             self.executor.set_commands(commands)
