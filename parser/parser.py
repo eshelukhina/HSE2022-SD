@@ -78,6 +78,8 @@ class Parser:
             cur += 1
         if cur_token:
             tokens.append(cur_token)
+        if quotes:
+            raise ParserException("Invalid input")
         result = []
         for value in tokens:
             if value in self.COMMANDS_LIST:
@@ -89,8 +91,6 @@ class Parser:
             else:
                 token_type = TokenType.ARG
             result.append(Token(value=value, type=token_type))
-        if quotes:
-            raise ParserException("Invalid input")
         return result
 
     def __construct_command__(self, command: List[Token]):
@@ -123,7 +123,7 @@ class Parser:
         tokens: List[Token] = self.tokenize(input)
         commands: List[List[Token]] = []
         cur_command: List[Token] = []
-        for i, token in enumerate(tokens):
+        for token in tokens:
             if token.type == TokenType.PIPE:
                 commands.append(cur_command)
                 cur_command = []
