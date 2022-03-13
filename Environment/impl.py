@@ -9,7 +9,7 @@ class Environment:
 
     def __init__(self, vars=None):
         if vars is None:
-            vars = {}
+            vars = {'': "$"}
         self.vars = vars
 
     def add_var(self, *, name, value) -> NoReturn:
@@ -34,3 +34,6 @@ class Environment:
         :returns Dict[str, str]
         """
         return copy.deepcopy(self.vars)
+
+
+environment = Environment()

@@ -33,17 +33,17 @@ def test_not_empty_file():
         cat = Cat([path])
         output, ret_code = cat.execute(context)
         assert ret_code == 0
-        assert output == content
+        assert content == output
     finally:
         os.remove(path)
 
 
 def test_with_error():
-    error = 'cat: no such file f\n'
+    error = 'cat: no such file f'
     context = Context()
     cat = Cat(['f'])
     output, ret_code = cat.execute(context)
-    assert not context.state
+    
     assert ret_code == 2
     assert output == error
 

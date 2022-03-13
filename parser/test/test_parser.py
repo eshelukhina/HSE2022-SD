@@ -7,18 +7,18 @@ from Commands.exit import Exit
 from Commands.process import Process
 from Commands.pwd import Pwd
 from Commands.wc import Wc
-from parser.impl import Parser
-
+from parser.parser import Parser
+from parser.parser import ParserException
 
 def test_empty():
     parser = Parser()
-    res = parser.parse(input_data="")
+    res = parser.parse("")
     assert res == []
 
 
 def test_process():
     parser = Parser()
-    res = parser.parse(input_data="git checkout -b")
+    res = parser.parse("git checkout -b")
     assert res == [
         Process(name='git', args=['checkout', '-b'])
     ]
@@ -26,7 +26,7 @@ def test_process():
 
 def test_basic():
     parser = Parser()
-    res = parser.parse(input_data="cat \"Hello World\" '$varName'")
+    res = parser.parse("cat \"Hello World\" '$varName'")
     assert res == [
         Cat(args=['Hello World', '$varName'])
     ]
@@ -34,7 +34,8 @@ def test_basic():
 
 def test_pipe():
     parser = Parser()
-    res = parser.parse(input_data="echo \"42\" | wc | pwd | exit")
+    res = parser.parse("echo \"42\" | wc | pwd | exit")
+
     assert res == [
         Echo(args=['42']),
         Wc(args=[]),
@@ -45,7 +46,7 @@ def test_pipe():
 
 def test_eq():
     parser = Parser()
-    res = parser.parse(input_data="x=\"Golang\" | y = 200 | z= 'damn'")
+    res = parser.parse("x=\"Golang\" | y = 200 | z= 'damn'")
     assert res == [
         Eq(dest='x', src='Golang'),
         Eq(dest='y', src='200'),
@@ -55,7 +56,7 @@ def test_eq():
 
 def test_command_arguments():
     parser = Parser()
-    res = parser.parse(input_data="echo echo")
+    res = parser.parse("echo echo")
     assert res == [
         Echo(args=["echo"])
     ]
@@ -63,11 +64,13 @@ def test_command_arguments():
 
 def test_fail_eq():
     parser = Parser()
-    with pytest.raises(ValueError):
-        parser.parse(input_data="x=")
+    res = parser.parse("x=")
+    assert res == [
+        Eq(dest='x', src=''),
+    ]
 
 
 def test_fail_single_quotes():
     parser = Parser()
-    with pytest.raises(ValueError):
-        parser.parse(input_data="cat \"")
+    with pytest.raises(ParserException) as e:
+        parser.parse("cat \"")

@@ -1,6 +1,9 @@
 import os
+
 import subprocess
 from typing import Tuple
+
+from optional import Optional
 
 from Executor.context import Context
 
@@ -18,19 +21,27 @@ class Process:
     def execute(self, context: Context) -> Tuple[str, int]:
         """
         Execute external program.
-        :returns: Tuple of command result and status code
-        :rtype: Tuple[str, int]
+        :returns: Status code
+        :rtype: int
         """
-        command = ' '.join([self.name] + self.args)
+        args = self.args
+        if context.state:
+            inp = context.state.get()
+        else:
+            inp = None
+
+        command = ' '.join([self.name] + args)
         env = os.environ.copy()
         env.update(context.env.get_vars())
+        if os.name == 'nt':
+            env.pop('')
         result = subprocess.run(
-            command, shell=True, capture_output=True, text=True, env=env
+            command, shell=True, input=inp, capture_output=True, text=True, env=env
         )
-        if result.returncode != 0:
-            return result.stderr, result.returncode
 
-        return result.stdout if result.stderr == '' else result.stdout + '\n' + result.stderr, result.returncode
+        if result.returncode != 0:
+            return result.stderr[:-1], result.returncode
+        return result.stdout, result.returncode
 
     def __str__(self):
         return f'Process name: {self.name}, args: {self.args}'
