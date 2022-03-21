@@ -1,12 +1,8 @@
-## Usage 
-```
-# install the required packages
-pip install -r requirements.txt
+# RogueLike Game
+## Разработчики
+- Чайкова Анастасия
+- Шелухина Екатерина
+- Усольцев Никита
 
-# run CLI app 
-python main.py
-
-# run tests
-pytest
-```
-Описание архитектуры находится в папке Architecture.
+## Композиция
+[Диаграмма классов](https://drive.google.com/file/d/1vkhZJnwlHZqxW6Lm5PCgaBKFzve1IyKx/view?usp=sharing)
