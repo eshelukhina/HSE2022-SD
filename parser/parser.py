@@ -2,6 +2,7 @@ from Commands.cat import Cat
 from Commands.echo import Echo
 from Commands.eq import Eq
 from Commands.exit import Exit
+from Commands.grep import Grep
 from Commands.process import Process
 from Commands.pwd import Pwd
 from Commands.wc import Wc
@@ -108,7 +109,9 @@ class Parser:
                 return Pwd(args=args)
             elif command[0].value == 'exit':
                 return Exit(args=args)
-            raise ParserException("No support for new commands")
+            elif command[0].value == 'grep':
+                return Grep(args=args)
+            raise ParserException(f"Command {command[0].value} is not supported")
         if len(command) == 2 and command[0].type == TokenType.ARG and command[1].type == TokenType.EQ:
             return Eq(dest=command[0].value, src="")
         if (len(command) == 3 and command[0].type == TokenType.ARG and
@@ -118,19 +121,22 @@ class Parser:
             return Process(name=command[0].value, args=[c.value for c in command[1:]])
 
     def parse(self, input: str):
-        if not input:
-            return []
         tokens: List[Token] = self.tokenize(input)
+        if not tokens:
+            return []
         commands: List[List[Token]] = []
         cur_command: List[Token] = []
-        for token in tokens:
+        if tokens[0].type == TokenType.PIPE:
+            raise ParserException('Pipe is not expected at the beginning of command')
+        elif tokens[-1].type == TokenType.PIPE:
+            raise ParserException('Pipe is not expected at the end of command')
+        for i, token in enumerate(tokens):
             if token.type == TokenType.PIPE:
                 commands.append(cur_command)
                 cur_command = []
             else:
                 cur_command.append(token)
-        if cur_command:
-            commands.append(cur_command)
+        commands.append(cur_command)
         result = []
         for command in commands:
             result.append(self.__construct_command__(command))
