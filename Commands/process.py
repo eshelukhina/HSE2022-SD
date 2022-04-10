@@ -30,17 +30,18 @@ class Process:
         else:
             inp = None
 
-        command = ' '.join([self.name] + args)
+        command = ' '.join(
+            ["\"" + self.name + "\""] +
+            ["\"" + arg + "\"" if ' ' in arg else arg for arg in args]
+        )
         env = os.environ.copy()
         env.update(context.env.get_vars())
         if os.name == 'nt':
             env.pop('')
         result = subprocess.run(
-            command, shell=True, input=inp, capture_output=True, text=True, env=env
+            command, shell=True, input=inp, text=True, env=env,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT
         )
-
-        if result.returncode != 0:
-            return result.stderr[:-1], result.returncode
         return result.stdout, result.returncode
 
     def __str__(self):

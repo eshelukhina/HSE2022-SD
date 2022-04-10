@@ -1,7 +1,7 @@
 from typing import Tuple
 
 from Environment.impl import environment
-
+from parser.parser import ParserException
 
 class Substitution:
     """
@@ -99,7 +99,7 @@ class Substitution:
                 else:
                     res = self.__find_and_replace(sub_s)
             else:
-                raise Exception("Invalid number of quotes")
+                raise ParserException("Invalid number of quotes")
             return res, i - 1
         elif s[i] == quote:
             sub_s = s[i_start:i + 1]
@@ -108,5 +108,5 @@ class Substitution:
             else:
                 res = self.__find_and_replace(sub_s)
         else:
-            raise Exception("Invalid number of quotes")
+            raise ParserException("Invalid number of quotes")
         return res, i

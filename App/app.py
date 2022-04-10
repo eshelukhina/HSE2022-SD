@@ -6,7 +6,7 @@ from optional import Optional
 from App.io import IO
 from Executor.executor import Executor
 from parser.substitution import Substitution
-from parser.parser import Parser
+from parser.parser import Parser, ParserException
 
 
 class App:
@@ -36,7 +36,7 @@ class App:
             try:
                 subst_user_input = self.substitution.substitute(user_input)
                 commands = self.parser.parse(input=subst_user_input)
-            except Exception as v_err:
+            except ParserException as v_err:
                 IO.write(Optional.of(v_err))
                 continue
 
